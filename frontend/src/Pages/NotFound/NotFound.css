@@ -1,0 +1,124 @@
+.not-found-page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.not-found-container {
+  width: min(1000px, 92%);
+  min-height: calc(100vh - 80px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.not-found-number {
+  position: absolute;
+  color: #e2e8f0;
+  font-size: clamp(180px, 28vw, 360px);
+  font-weight: 800;
+  line-height: 1;
+  user-select: none;
+  letter-spacing: -15px;
+}
+
+.not-found-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  text-align: center;
+}
+
+.not-found-content > span {
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.not-found-content h1 {
+  margin: 14px 0 17px;
+  color: #111827;
+  font-size: clamp(36px, 5vw, 55px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+.not-found-content p {
+  max-width: 470px;
+  margin: 0 auto;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.not-found-actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.not-found-primary,
+.not-found-secondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 17px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.not-found-primary {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.not-found-primary:hover {
+  background: #1d4ed8;
+}
+
+.not-found-secondary {
+  border: 1px solid #dbe1e8;
+  background: white;
+  color: #334155;
+}
+
+.not-found-secondary:hover {
+  border-color: #94a3b8;
+}
+
+.not-found-back {
+  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.not-found-back:hover {
+  color: #2563eb;
+}
+
+@media (max-width: 550px) {
+  .not-found-actions {
+    flex-direction: column;
+  }
+
+  .not-found-primary,
+  .not-found-secondary {
+    justify-content: center;
+  }
+
+  .not-found-number {
+    font-size: 180px;
+  }
+}

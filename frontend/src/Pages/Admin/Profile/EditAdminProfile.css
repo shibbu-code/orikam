@@ -1,0 +1,131 @@
+.edit-admin-profile {
+  min-height: 100vh;
+  padding: 28px;
+  background: #f8fafc;
+}
+
+.edit-profile-header {
+  margin-bottom: 24px;
+}
+
+.edit-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: #374151;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.edit-profile-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #111827;
+}
+
+.edit-profile-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+}
+
+.edit-profile-card {
+  max-width: 650px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 28px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  border-color: #6366f1;
+}
+
+.edit-profile-error,
+.edit-profile-success {
+  padding: 11px 13px;
+  border-radius: 7px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.edit-profile-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.edit-profile-success {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.edit-profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-profile-btn,
+.save-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-profile-btn {
+  border: 1px solid #e5e7eb;
+  background: white;
+  color: #374151;
+}
+
+.save-profile-btn {
+  border: none;
+  background: #4f46e5;
+  color: white;
+}
+
+.save-profile-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .edit-admin-profile {
+    padding: 18px;
+  }
+
+  .edit-profile-card {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,88 @@
+.brand-section {
+  padding: 42px 5%;
+  background: #f8fafc;
+}
+
+.brand-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 22px;
+}
+
+.brand-section-header h2 {
+  margin: 0 0 6px;
+
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.brand-section-header p {
+  margin: 0;
+
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.view-all-button {
+  border: none;
+  background: transparent;
+
+  color: #111827;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.view-all-button:hover {
+  text-decoration: underline;
+}
+
+.brand-list {
+  display: flex;
+  gap: 18px;
+
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.brand-list::-webkit-scrollbar {
+  height: 5px;
+}
+
+.brand-list::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.brand-loading {
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #6b7280;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .brand-section {
+    padding: 32px 16px;
+  }
+
+  .brand-section-header h2 {
+    font-size: 20px;
+  }
+
+  .brand-section-header p {
+    display: none;
+  }
+
+  .brand-card {
+    flex-basis: 150px;
+  }
+}

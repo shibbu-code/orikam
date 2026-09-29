@@ -1,0 +1,228 @@
+.admin-brands-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f8fafc;
+}
+
+.admin-brands-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.admin-brands-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #111827;
+}
+
+.admin-brands-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+}
+
+.add-brand-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-brands-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.admin-brand-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 320px;
+  padding: 10px 12px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.admin-brand-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.admin-brand-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-brand-filters select {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.admin-brand-count {
+  color: #64748b;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.admin-brands-table-wrapper {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.admin-brands-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-brands-table th,
+.admin-brands-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.admin-brands-table th {
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.admin-brand-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-brand-image {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.admin-brand-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.admin-brand-info strong {
+  display: block;
+  color: #111827;
+}
+
+.admin-brand-info span {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.brand-status-button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.brand-status-button.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.brand-status-button.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.brand-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.brand-actions button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-actions button:hover {
+  background: #f8fafc;
+}
+
+.brand-actions .delete-action {
+  color: #dc2626;
+}
+
+.admin-brands-loading,
+.admin-brands-empty {
+  padding: 60px;
+  text-align: center;
+  color: #64748b;
+}
+
+.admin-brands-empty h2 {
+  color: #111827;
+  margin: 12px 0 6px;
+}
+
+@media (max-width: 900px) {
+  .admin-brands-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .admin-brand-search {
+    width: 100%;
+  }
+
+  .admin-brand-filters {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 700px) {
+  .admin-brands-page {
+    padding: 20px;
+  }
+
+  .admin-brands-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

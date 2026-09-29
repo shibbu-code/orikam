@@ -1,0 +1,24 @@
+.pwa-install-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+
+  padding: 12px 18px;
+  border: none;
+  border-radius: 9px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+
+  cursor: pointer;
+}
+
+.pwa-install-button:hover {
+  background: #1d4ed8;
+}

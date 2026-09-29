@@ -1,0 +1,171 @@
+.edit-brand-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f8fafc;
+}
+
+.edit-brand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.edit-brand-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #111827;
+}
+
+.edit-brand-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+}
+
+.edit-brand-back {
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.edit-brand-form {
+  max-width: 800px;
+}
+
+.edit-brand-section {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.edit-brand-section h2 {
+  margin: 0 0 22px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.edit-brand-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.edit-brand-group:last-child {
+  margin-bottom: 0;
+}
+
+.edit-brand-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.edit-brand-group input,
+.edit-brand-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.edit-brand-group input:focus,
+.edit-brand-group textarea:focus {
+  border-color: #2563eb;
+}
+
+.edit-brand-group textarea {
+  resize: vertical;
+}
+
+.edit-brand-group small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.brand-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+}
+
+.brand-checkbox input {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+}
+
+.edit-brand-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.brand-cancel-button,
+.brand-save-button {
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.brand-cancel-button {
+  background: white;
+  border: 1px solid #d1d5db;
+}
+
+.brand-save-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+.brand-save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.edit-brand-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  color: #64748b;
+}
+
+@media (max-width: 700px) {
+  .edit-brand-page {
+    padding: 20px;
+  }
+
+  .edit-brand-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .edit-brand-form {
+    width: 100%;
+  }
+
+  .edit-brand-actions {
+    justify-content: stretch;
+  }
+
+  .brand-cancel-button,
+  .brand-save-button {
+    flex: 1;
+  }
+}

@@ -1,0 +1,25 @@
+:root {
+  /* Primary Theme */
+  --primary: #dc2626;
+  --primary-dark: #b91c1c;
+  --primary-light: #fef2f2;
+  --primary-border: #fecaca;
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  /* Background */
+  --background: #f8fafc;
+  --surface: #ffffff;
+
+  /* Borders */
+  --border: #e5e7eb;
+  --border-light: #f1f5f9;
+
+  /* Status */
+  --success: #16a34a;
+  --warning: #ea580c;
+  --danger: #dc2626;
+}
