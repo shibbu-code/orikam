@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
-    
   },
   "keywords": [],
   "author": "",
@@ -14,6 +13,7 @@
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^18.0.3",
+    "express": "^5.2.1",
     "mongodb": "^7.6.0",
     "Router": "^2.1.0"
   }
