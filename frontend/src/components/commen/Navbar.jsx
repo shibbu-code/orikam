@@ -18,7 +18,7 @@ const Navbar = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:3000/api/users/${userId}`
+          `https://orikam-2.onrender.com/api/users/${userId}`
         );
 
         const data = await response.json();
@@ -41,7 +41,7 @@ const Navbar = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:3000/api/cart/${userId}`
+          `https://orikam-2.onrender.com/api/cart/${userId}`
         );
 
         const data = await response.json();

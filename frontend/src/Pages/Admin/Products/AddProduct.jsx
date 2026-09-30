@@ -83,7 +83,7 @@ const AddProduct = () => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:3000/api/products/add",
+        "https://orikam-2.onrender.com/api/products/add",
         {
           method: "POST",
           headers: {

@@ -30,7 +30,7 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/products"
+        "https://orikam-2.onrender.com/api/products"
       );
 
       const data = await response.json();
@@ -48,7 +48,7 @@ const AdminProducts = () => {
   const handleStatusChange = async (product) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/products/${product._id}/status`,
+      `https://orikam-2.onrender.com/api/products/${product._id}/status`,
       {
         method: "PATCH",
         headers: {

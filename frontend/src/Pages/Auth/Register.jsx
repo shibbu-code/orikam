@@ -31,7 +31,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/users/register",
+        "https://orikam-2.onrender.com/api/users/register",
         {
           method: "POST",
           headers: {

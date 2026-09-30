@@ -33,7 +33,7 @@ const Login = () => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:3000/api/users/login",
+        "https://orikam-2.onrender.com/api/users/login",
         {
           method: "POST",
           headers: {

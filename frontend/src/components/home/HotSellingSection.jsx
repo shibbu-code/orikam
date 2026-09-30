@@ -42,7 +42,7 @@ const HotSellingSection = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/cart/add",
+        "https://orikam-2.onrender.com/api/cart/add",
         {
           method: "POST",
           headers: {
