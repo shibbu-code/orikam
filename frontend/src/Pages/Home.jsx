@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/commen/Navbar";
 import "./Home.css";
 import Footer from "../components/home/Footer";
-import FAQSection from "../components/home/FAQsection";
+import FAQSection from "../components/home/FAQSection";
 import HotSellingSection from "../components/home/HotSellingSection";
 import CategorySection from "../components/home/CategorySection"; 
 import BrandSection from "../components/home/BrandSection";
