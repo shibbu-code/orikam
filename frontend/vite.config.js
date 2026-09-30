@@ -13,8 +13,10 @@ export default defineConfig({
         name: "ORIKAM",
         short_name: "ORIKAM",
         description: "B2B Dental Products Marketplace",
-        theme_color: "#2563eb",
+
+        theme_color: "#dc2626",
         background_color: "#ffffff",
+
         display: "standalone",
         start_url: "/",
         scope: "/",
@@ -34,14 +36,14 @@ export default defineConfig({
       },
 
       workbox: {
-        navigateFallback: "/offline.html",
-
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/.*\.(?:png|jpg|jpeg|svg|webp|gif)$/,
+            urlPattern: /^https:\/\/.*\.(?:png|jpg|jpeg|svg|webp|gif)$/i,
             handler: "CacheFirst",
+
             options: {
-              cacheName: "images",
+              cacheName: "orikam-images",
+
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24 * 30,
