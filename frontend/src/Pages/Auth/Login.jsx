@@ -117,7 +117,7 @@ const Login = () => {
             <label>Email address</label>
 
             <div className="input-wrapper">
-              <Mail size={18} />
+              
 
               <input
                 type="email"
@@ -135,7 +135,7 @@ const Login = () => {
             <label>Password</label>
 
             <div className="input-wrapper">
-              <Lock size={18} />
+              
 
               <input
                 type={
@@ -221,7 +221,7 @@ const Login = () => {
 
         {/* Register */}
         <div className="login-footer">
-          Don't have an account?{" "}
+          Dont have an account?{" "}
 
           <span
             onClick={() =>

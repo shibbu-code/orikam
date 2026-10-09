@@ -242,15 +242,15 @@ const addRecentlyViewed = async (req, res) => {
       });
     }
 
-    // Remove product if it already exists
+    // Remove  already exists
     user.recentlyViewed = user.recentlyViewed.filter(
       (id) => id.toString() !== productId.toString()
     );
 
-    // Add latest viewed product at the beginning
+    // Add latest view....
     user.recentlyViewed.unshift(productId);
 
-    // Keep only latest 5
+    // ' only latest 5
     user.recentlyViewed = user.recentlyViewed.slice(0, 5);
 
     await user.save();

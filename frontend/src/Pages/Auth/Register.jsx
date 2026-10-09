@@ -88,7 +88,7 @@ const Register = () => {
             <label>Name</label>
 
             <div className="input-wrapper">
-              <User size={18} />
+             
 
               <input
                 type="text"
@@ -105,7 +105,7 @@ const Register = () => {
             <label>Email</label>
 
             <div className="input-wrapper">
-              <Mail size={18} />
+              
 
               <input
                 type="email"
@@ -122,8 +122,7 @@ const Register = () => {
             <label>Phone</label>
 
             <div className="input-wrapper">
-              <Phone size={18} />
-
+              
               <input
                 type="tel"
                 name="phone"
@@ -138,7 +137,7 @@ const Register = () => {
             <label>Password</label>
 
             <div className="input-wrapper">
-              <Lock size={18} />
+             
 
               <input
                 type={showPassword ? "text" : "password"}
@@ -175,7 +174,7 @@ const Register = () => {
         </form>
 
         <div className="register-footer">
-          Already have an account?{" "}
+          Already have account{" "}
           <span onClick={() => navigate("/login")}>
             Sign in
           </span>

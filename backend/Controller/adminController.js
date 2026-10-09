@@ -18,9 +18,9 @@ const getAdminDashboard = async (req, res) => {
       isActive: true,
     });
 
-    // -----------------------------
+    
     // RECENT ORDERS
-    // -----------------------------
+    
 
     const recentOrders = await Order.find()
       .sort({ createdAt: -1 })
@@ -30,9 +30,9 @@ const getAdminDashboard = async (req, res) => {
         "_id user totalAmount orderStatus paymentStatus createdAt items"
       );
 
-    // -----------------------------
+    
     // LOW STOCK PRODUCTS
-    // -----------------------------
+    
 
     const lowStockProducts = await Product.find({
       stock: { $lte: 10 },
