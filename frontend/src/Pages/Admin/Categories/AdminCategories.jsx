@@ -63,6 +63,44 @@ const [sortBy, setSortBy] = useState("newest");
     }
   };
 
+  const handleDeleteCategory = async (category) => {
+const confirmed = window.confirm(
+`Are you sure you want to delete "${category.name}"?`
+);
+
+if (!confirmed) return;
+
+try {
+const response = await fetch(
+`${import.meta.env.VITE_API_URL}/api/categories/${category._id}`,
+{
+method: "DELETE",
+}
+);
+
+const data = await response.json();
+
+if (!response.ok) {
+  alert(data.message || "Failed to delete category.");
+  return;
+}
+
+setCategories((previousCategories) =>
+  previousCategories.filter(
+    (item) => item._id !== category._id
+  )
+);
+
+alert("Category deleted successfully.");
+
+
+} catch (error) {
+console.error("Delete category error:", error);
+alert("Something went wrong while deleting the category.");
+}
+};
+
+
   const filteredCategories = categories
   .filter((category) => {
     const matchesSearch = category.name
@@ -282,7 +320,7 @@ const [sortBy, setSortBy] = useState("newest");
   className="delete-action"
   onClick={(e) => {
     e.stopPropagation();
-    alert("Delete API will be connected later.");
+    handleDeleteCategory(category);
   }}
 >
   <Trash2 size={17} />

@@ -1,5 +1,5 @@
 const Brand = require("../models/Brand");
-
+const Product = require("../models/Product");
 const addBrand = async (req, res) => {
   try {
     const {
@@ -148,6 +148,52 @@ const updateBrandStatus = async (req, res) => {
   }
 };
 
+const deleteBrand = async (req, res) => {
+try {
+const { brandId } = req.params;
+
+
+const brand = await Brand.findById(brandId);
+
+if (!brand) {
+  return res.status(404).json({
+    message: "Brand not found",
+  });
+}
+
+// Prevent deletion if products use this brand
+const productExists = await Product.exists({
+  brand: brandId,
+});
+
+if (productExists) {
+  return res.status(400).json({
+    message:
+      "Cannot delete this brand because products are using it. Reassign those products first.",
+  });
+}
+
+await Brand.findByIdAndDelete(brandId);
+
+return res.status(200).json({
+  message: "Brand deleted successfully",
+  brandId,
+});
+
+
+} catch (error) {
+console.error("Delete brand error:", error);
+
+
+return res.status(500).json({
+  message: "Failed to delete brand",
+  error: error.message,
+});
+
+
+}
+};
+
 
 module.exports = {
   addBrand,
@@ -155,4 +201,5 @@ module.exports = {
   getBrandById,
   updateBrand,
   updateBrandStatus,
+  deleteBrand,
 };

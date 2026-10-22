@@ -5,7 +5,8 @@ const router = express.Router();
 const { addProduct, getProductsByCategory 
     , getProductsByBrand , getHotSellingProducts,
     getAllProducts , getProductById, updateProduct,
-    updateProductStatus, getSimilarProducts
+    updateProductStatus, getSimilarProducts,
+    deleteProduct
 } = require("../Controller/productController");
 
 router.post("/add", addProduct);
@@ -17,6 +18,6 @@ router.get("/", getAllProducts);
 router.patch("/:productId/status", updateProductStatus);
 router.put("/:productId", updateProduct); 
 router.get("/:productId", getProductById);
- 
+ router.delete("/:productId", deleteProduct);
 
 module.exports = router;

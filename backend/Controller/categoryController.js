@@ -1,4 +1,5 @@
 const Category = require("../models/Category");
+const Product = require("../models/Product");
 
 const addCategory = async (req, res) => {
   try {
@@ -157,6 +158,68 @@ const getCategoryById = async (req, res) => {
     });
   }
 };
+
+const deleteCategory = async (req, res) => {
+try {
+const { categoryId } = req.params;
+
+
+const category = await Category.findById(categoryId);
+
+if (!category) {
+  return res.status(404).json({
+    message: "Category not found",
+  });
+}
+
+// Prevent deletion if products use this category
+const productExists = await Product.exists({
+  $or: [
+    { category: categoryId },
+    { subCategory: categoryId },
+  ],
+});
+
+if (productExists) {
+  return res.status(400).json({
+    message:
+      "Cannot delete this category because products are using it. Reassign those products first.",
+  });
+}
+
+// Prevent deletion if other categories use it as a parent
+const childCategoryExists = await Category.exists({
+  parentCategory: categoryId,
+});
+
+if (childCategoryExists) {
+  return res.status(400).json({
+    message:
+      "Cannot delete this category because it has subcategories. Delete or reassign them first.",
+  });
+}
+
+await Category.findByIdAndDelete(categoryId);
+
+return res.status(200).json({
+  message: "Category deleted successfully",
+  categoryId,
+});
+
+
+} catch (error) {
+console.error("Delete category error:", error);
+
+
+return res.status(500).json({
+  message: "Failed to delete category",
+  error: error.message,
+});
+
+
+}
+};
+
    
 module.exports = {
   addCategory,
@@ -164,4 +227,5 @@ module.exports = {
   updateCategory,
   updateCategoryStatus,
   getCategoryById,
+  deleteCategory,
 };

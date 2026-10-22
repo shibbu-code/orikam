@@ -91,6 +91,42 @@ isActive: !product.isActive,
 
 
 };
+const handleDeleteProduct = async (product) => {
+const confirmed = window.confirm(
+`Are you sure you want to delete "${product.name}"? This action cannot be undone.`
+);
+
+if (!confirmed) return;
+
+try {
+const response = await fetch(
+`${import.meta.env.VITE_API_URL}/api/products/${product._id}`,
+{
+method: "DELETE",
+}
+);
+
+
+const data = await response.json();
+
+if (!response.ok) {
+  alert(data.message || "Failed to delete product.");
+  return;
+}
+
+setProducts((previousProducts) =>
+  previousProducts.filter((item) => item._id !== product._id)
+);
+
+alert("Product deleted successfully.");
+
+
+} catch (error) {
+console.error("Delete product error:", error);
+alert("Something went wrong while deleting the product.");
+}
+};
+
 
 const filteredProducts = products.filter((product) =>
 product.name?.toLowerCase().includes(search.toLowerCase())
@@ -113,7 +149,7 @@ Go Home </button> </div>
 
 return ( <div className="admin-products-page"> <header className="admin-products-header"> <div> <h1>Products</h1> <p>Manage products available on your platform.</p> </div>
 
-```
+
     <button
       className="add-product-button"
       onClick={() => navigate("/admin/products/add")}
@@ -254,7 +290,7 @@ return ( <div className="admin-products-page"> <header className="admin-products
                       className="delete-action"
                       onClick={(event) => {
                         event.stopPropagation();
-                        alert("Delete API will be connected next.");
+                        handleDeleteProduct(product);
                       }}
                     >
                       <Trash2 size={17} />

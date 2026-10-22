@@ -311,6 +311,39 @@ const getSimilarProducts = async (req, res) => {
       });
     }
 
+    const deleteProduct = async (req, res) => {
+try {
+const { productId } = req.params;
+
+
+const product = await Product.findByIdAndDelete(productId);
+
+if (!product) {
+  return res.status(404).json({
+    message: "Product not found",
+  });
+}
+
+res.status(200).json({
+  message: "Product deleted successfully",
+  productId,
+});
+
+
+} catch (error) {
+console.error("Delete product error:", error);
+
+
+res.status(500).json({
+  message: "Failed to delete product",
+  error: error.message,
+});
+
+
+}
+};
+
+
     const similarProducts = await Product.find({
       _id: { $ne: productId },
       category: currentProduct.category,
@@ -335,6 +368,38 @@ const getSimilarProducts = async (req, res) => {
     });
   }
 };
+const deleteProduct = async (req, res) => {
+try {
+const { productId } = req.params;
+
+
+const product = await Product.findByIdAndDelete(productId);
+
+if (!product) {
+  return res.status(404).json({
+    message: "Product not found",
+  });
+}
+
+res.status(200).json({
+  message: "Product deleted successfully",
+  productId,
+});
+
+
+} catch (error) {
+console.error("Delete product error:", error);
+
+
+res.status(500).json({
+  message: "Failed to delete product",
+  error: error.message,
+});
+
+
+}
+};
+
 
 module.exports = {
   addProduct,
@@ -345,5 +410,6 @@ module.exports = {
     getProductById,
     updateProduct,
     updateProductStatus,
-    getSimilarProducts
+    getSimilarProducts,
+   deleteProduct,
 };

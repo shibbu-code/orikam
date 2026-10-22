@@ -79,6 +79,43 @@ const AdminBrands = () => {
     }
   };
 
+  const handleDeleteBrand = async (brand) => {
+const confirmed = window.confirm(
+`Are you sure you want to delete "${brand.name}"?`
+);
+
+if (!confirmed) return;
+
+try {
+const response = await fetch(
+`${import.meta.env.VITE_API_URL}/api/brands/${brand._id}`,
+{
+method: "DELETE",
+}
+);
+
+
+const data = await response.json();
+
+if (!response.ok) {
+  alert(data.message || "Failed to delete brand.");
+  return;
+}
+
+setBrands((previousBrands) =>
+  previousBrands.filter((item) => item._id !== brand._id)
+);
+
+alert("Brand deleted successfully.");
+
+
+} catch (error) {
+console.error("Delete brand error:", error);
+alert("Something went wrong while deleting the brand.");
+}
+};
+
+
   const filteredBrands = brands
     .filter((brand) => {
       const matchesSearch = brand.name
@@ -332,7 +369,7 @@ const AdminBrands = () => {
   className="delete-action"
   onClick={(e) => {
     e.stopPropagation();
-    alert("Delete API will be connected later.");
+    handleDeleteBrand(brand);
   }}
 >
   <Trash2 size={17} />
