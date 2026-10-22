@@ -4,7 +4,7 @@ const HeroBanner4 = () => {
   return (
     <section className="hero-banner"
      onClick={() => {
-      window.location.href = "/products/6abc8f1232d3d9794dbdb51f";
+      window.location.href = "/products/6abc8f1232d3d9794dbdb515";
     }  } 
     >
       <img
