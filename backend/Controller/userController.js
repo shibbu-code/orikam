@@ -68,11 +68,11 @@ const getUserDetails = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, password } = req.body;
 
-    if (!email || !password || !role) {
+    if (!email || !password ) {
       return res.status(400).json({
-        message: "Email, password and role are required",
+        message: "Email, password  are required",
       });
     }
 
@@ -91,11 +91,7 @@ const loginUser = async (req, res) => {
     }
 
     // Verify selected role
-    if (user.role !== role) {
-      return res.status(403).json({
-        message: `This account is registered as ${user.role}`,
-      });
-    }
+   
 
     res.status(200).json({
       message: "Login successful",

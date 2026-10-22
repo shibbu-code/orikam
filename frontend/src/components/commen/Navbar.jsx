@@ -282,6 +282,8 @@ onClick={() => navigate("/")}
 
     {/* Profile */}
     {/* Profile Dropdown */}
+{/* Profile Dropdown */}
+
 <div className="navbar-profile-dropdown" ref={profileRef}>
   <button
     type="button"
@@ -294,27 +296,56 @@ onClick={() => navigate("/")}
       <User size={19} />
     </div>
 
-    <div className="profile-info">
-      <span className="profile-name">
-        {user?.name || "Guest"}
-      </span>
 
-      <span className="profile-email">
-        {user?.email || "Sign in"}
-      </span>
-    </div>
+<div className="profile-info">
+  <span className="profile-name">
+    {user?.name || "Guest"}
+  </span>
 
-    <ChevronDown
-      size={16}
-      className={`profile-chevron ${
-        profileOpen ? "profile-chevron-open" : ""
-      }`}
-    />
+  <span className="profile-email">
+    {user?.email || "Sign in to your account"}
+  </span>
+</div>
+
+<ChevronDown
+  size={16}
+  className={`profile-chevron ${
+    profileOpen ? "profile-chevron-open" : ""
+  }`}
+/>
+
+
   </button>
 
-  {profileOpen && (
-    <div className="profile-dropdown-menu">
-      {/* Membership Summary */}
+{profileOpen && ( <div className="profile-dropdown-menu">
+{!userId ? (
+/* Logged-out user */
+<> <div className="profile-dropdown-summary"> <div className="profile-membership-icon"> <User size={20} /> </div>
+
+
+        <div className="profile-membership-info">
+          <span>Welcome to ORIKAM</span>
+          <strong>Sign in to your account</strong>
+        </div>
+      </div>
+
+      <div className="profile-dropdown-divider" />
+
+      <button
+        type="button"
+        className="profile-dropdown-item"
+        onClick={() => {
+          setProfileOpen(false);
+          navigate("/login");
+        }}
+      >
+        <LogOut size={17} />
+        <span>Login / Sign Up</span>
+      </button>
+    </>
+  ) : (
+    /* Logged-in user */
+    <>
       <div className="profile-dropdown-summary">
         <div className="profile-membership-icon">
           <Crown size={20} />
@@ -333,7 +364,6 @@ onClick={() => navigate("/")}
 
       <div className="profile-dropdown-divider" />
 
-      {/* Quick Links */}
       <button
         type="button"
         className="profile-dropdown-item"
@@ -392,9 +422,15 @@ onClick={() => navigate("/")}
         <LogOut size={17} />
         <span>Logout</span>
       </button>
-    </div>
+    </>
   )}
 </div>
+
+
+)}
+
+</div>
+
   </div>
 </header>
 

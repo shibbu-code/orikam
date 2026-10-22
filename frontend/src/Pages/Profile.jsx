@@ -138,7 +138,7 @@ const initials = (user.name || "U")
 
 return ( <div className="profile-page"> <Navbar />
 
-```
+
   <main className="profile-container">
     {/* PAGE HEADING */}
     <div className="profile-page-heading">
