@@ -30,7 +30,7 @@ const EditCategory = () => {
   const fetchCategory = async () => {
     try {
       const response = await api.get(
-        `/categories/${categoryId}`
+        `api/categories/${categoryId}`
       );
 
       const category = response.data.category;
@@ -71,7 +71,7 @@ const EditCategory = () => {
       setSaving(true);
 
       const response = await api.put(
-        `/categories/${categoryId}`,
+        `api/categories/${categoryId}`,
         {
           name: formData.name,
           description: formData.description,

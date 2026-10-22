@@ -9,6 +9,7 @@ const {
   requestReturn,
   getAllReturns,
   updateReturnStatus,
+  getRewardPreview,
 } = require("../Controller/orderController");
 
 const router = express.Router();
@@ -28,5 +29,7 @@ router.patch("/:orderId/status", updateOrderStatus);
 router.patch("/:orderId/return/status", updateReturnStatus);
 
 router.get("/:orderId", getOrderById);
+
+router.post("/reward-preview", getRewardPreview);
 
 module.exports = router;

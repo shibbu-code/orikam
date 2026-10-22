@@ -1,7 +1,9 @@
+
 .edit-brand-page {
   min-height: 100vh;
   padding: 32px;
   background: #f8fafc;
+  box-sizing: border-box;
 }
 
 .edit-brand-header {
@@ -9,26 +11,38 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 28px;
+  gap: 16px;
 }
 
 .edit-brand-header h1 {
   margin: 0;
   font-size: 28px;
+  font-weight: 700;
   color: #111827;
+  letter-spacing: -0.5px;
 }
 
 .edit-brand-header p {
   margin: 6px 0 0;
   color: #64748b;
+  font-size: 14px;
 }
 
 .edit-brand-back {
   padding: 10px 16px;
-  border: 1px solid #d1d5db;
-  background: white;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #374151;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.edit-brand-back:hover {
+  color: #d10000;
+  background: #fff1f1;
+  border-color: #fecaca;
 }
 
 .edit-brand-form {
@@ -36,16 +50,18 @@
 }
 
 .edit-brand-section {
-  background: white;
+  background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
 }
 
 .edit-brand-section h2 {
   margin: 0 0 22px;
   font-size: 18px;
+  font-weight: 700;
   color: #111827;
 }
 
@@ -70,20 +86,31 @@
 .edit-brand-group textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 11px 12px;
+  padding: 12px 13px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
+  font-family: inherit;
   font-size: 14px;
+  color: #111827;
+  background: #ffffff;
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-brand-group input::placeholder,
+.edit-brand-group textarea::placeholder {
+  color: #9ca3af;
 }
 
 .edit-brand-group input:focus,
 .edit-brand-group textarea:focus {
-  border-color: #2563eb;
+  border-color: #d10000;
+  box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.08);
 }
 
 .edit-brand-group textarea {
   resize: vertical;
+  min-height: 100px;
 }
 
 .edit-brand-group small {
@@ -103,6 +130,8 @@
 .brand-checkbox input {
   width: 17px;
   height: 17px;
+  margin: 0;
+  accent-color: #d10000;
   cursor: pointer;
 }
 
@@ -110,25 +139,41 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+  padding-top: 4px;
 }
 
 .brand-cancel-button,
 .brand-save-button {
   padding: 11px 20px;
   border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .brand-cancel-button {
-  background: white;
+  background: #ffffff;
+  color: #374151;
   border: 1px solid #d1d5db;
 }
 
+.brand-cancel-button:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
 .brand-save-button {
-  background: #2563eb;
-  color: white;
-  border: none;
+  background: #d10000;
+  color: #ffffff;
+  border: 1px solid #d10000;
+}
+
+.brand-save-button:hover:not(:disabled) {
+  background: #ff2e2e;
+  border-color: #ff2e2e;
+  box-shadow: 0 4px 10px rgba(209, 0, 0, 0.15);
 }
 
 .brand-save-button:disabled {
@@ -136,6 +181,7 @@
   cursor: not-allowed;
 }
 
+/* LOADING */
 .edit-brand-loading {
   min-height: 100vh;
   display: flex;
@@ -143,11 +189,13 @@
   justify-content: center;
   background: #f8fafc;
   color: #64748b;
+  font-size: 14px;
 }
 
+/* RESPONSIVE */
 @media (max-width: 700px) {
   .edit-brand-page {
-    padding: 20px;
+    padding: 20px 16px;
   }
 
   .edit-brand-header {
@@ -156,8 +204,16 @@
     gap: 16px;
   }
 
+  .edit-brand-header h1 {
+    font-size: 24px;
+  }
+
   .edit-brand-form {
     width: 100%;
+  }
+
+  .edit-brand-section {
+    padding: 18px;
   }
 
   .edit-brand-actions {
@@ -169,3 +225,15 @@
     flex: 1;
   }
 }
+
+@media (max-width: 400px) {
+  .edit-brand-actions {
+    flex-direction: column-reverse;
+  }
+
+  .brand-cancel-button,
+  .brand-save-button {
+    width: 100%;
+  }
+}
+

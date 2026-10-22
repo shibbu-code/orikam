@@ -27,7 +27,7 @@ const AdminReturns = () => {
     try {
       setLoading(true);
 
-      const response = await api.get("/orders/returns");
+      const response = await api.get("api/orders/returns");
 
       setReturns(response.data.returns || []);
     } catch (error) {

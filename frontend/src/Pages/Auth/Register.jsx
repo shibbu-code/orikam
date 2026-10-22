@@ -1,68 +1,72 @@
 import React, { useState } from "react";
-import { User, Mail, Lock, Phone, Eye, EyeOff } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Gift } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "./Register.css";
 
 const Register = () => {
-  const navigate = useNavigate();
+const navigate = useNavigate();
+const [searchParams] = useSearchParams();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-  });
+const referralFromUrl = searchParams.get("ref") || "";
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+const [formData, setFormData] = useState({
+name: "",
+email: "",
+password: "",
+phone: "",
+referralCode: referralFromUrl.trim().toUpperCase(),
+});
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+const [showPassword, setShowPassword] = useState(false);
+const [error, setError] = useState("");
+const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+const handleChange = (e) => {
+const { name, value } = e.target;
 
-    try {
-      const response = await fetch(
-        "https://orikam-2.onrender.com/api/users/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
 
-      const data = await response.json();
+setFormData((previous) => ({
+  ...previous,
+  [name]: name === "referralCode" ? value.toUpperCase() : value,
+}));
+};
 
-      if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
+
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/users/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          referralCode: formData.referralCode.trim().toUpperCase(),
+        }),
       }
+    );
 
-      // Save user information
-      const user = data.user;
-
-      localStorage.setItem("userId", user._id);
-      localStorage.setItem("userName", user.name);
-      localStorage.setItem("userEmail", user.email);
-      localStorage.setItem("userRole", user.role);
-      localStorage.setItem("isLoggedIn", "true");
-
-      navigate("/");
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Registration failed");
     }
-  };
+
+    const user = data.user;
+    localStorage.setItem("userId", user._id);
+    localStorage.setItem("userName", user.name);
+    localStorage.setItem("userEmail", user.email);
+    localStorage.setItem("userRole", user.role);
+    localStorage.setItem("isLoggedIn", "true");
+    navigate("/");
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="register-page">

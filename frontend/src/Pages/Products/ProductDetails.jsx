@@ -7,7 +7,7 @@ import {
   Plus,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import Footer from "../../components/home/Footer"
 import Navbar from "../../components/commen/Navbar";
 import {
   getProductById,
@@ -16,6 +16,7 @@ import {
 
 import {addRecentlyViewed} from "../../services/userApi";
 import "./ProductDetails.css";
+import api from "../../services/api";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -26,6 +27,8 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
 
   const [similarProducts, setSimilarProducts] = useState([]);
+  const [rewardPreview, setRewardPreview] = useState(null);
+  const [rewardLoading, setRewardLoading] = useState(false);
 
   const userId = localStorage.getItem("userId");
 
@@ -115,6 +118,57 @@ if (userId) {
   };
 
   const effectivePrice = getEffectivePrice();
+  const subtotal = Number((quantity * effectivePrice).toFixed(2));
+
+  // Fetch membership-tier coin preview for this product and quantity.
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchRewardPreview = async () => {
+      if (!userId || !product?._id || quantity < moq) {
+        setRewardPreview(null);
+        return;
+      }
+
+      try {
+        setRewardLoading(true);
+        const response = await api.post("/api/orders/reward-preview", {
+          userId,
+          productId: product._id,
+          quantity,
+        });
+
+        if (!cancelled) {
+          setRewardPreview(response.data?.preview || response.data || null);
+        }
+      } catch (error) {
+        console.error("Failed to fetch product reward preview:", error);
+        if (!cancelled) setRewardPreview(null);
+      } finally {
+        if (!cancelled) setRewardLoading(false);
+      }
+    };
+
+    fetchRewardPreview();
+    return () => { cancelled = true; };
+  }, [userId, product?._id, quantity, moq]);
+
+  const rewardCoinsAvailable = Math.max(0, Number(rewardPreview?.availableCoins) || 0);
+  const rewardCoinsToRedeem = Math.max(0, Number(rewardPreview?.coinsToRedeem) || 0);
+  const rewardDiscount = Math.min(
+    Number((subtotal * 0.1).toFixed(2)),
+    Math.max(0, Number(rewardPreview?.coinDiscount) || 0)
+  );
+  const rewardCoinsEarned = Math.max(0, Number(rewardPreview?.estimatedCoinsEarned) || 0);
+  const membershipName = rewardPreview?.membership || rewardPreview?.membershipTier || "Guest";
+  const membershipMultiplier = Math.max(1, Number(rewardPreview?.coinMultiplier) || 1);
+  const productFinalPrice = Math.max(0, subtotal - rewardDiscount);
+
+  const formatMoney = (value) =>
+    `₹${Number(value || 0).toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
 
   /*
    * Quantity controls
@@ -158,7 +212,7 @@ if (userId) {
 
     try {
       const response = await fetch(
-        "https://orikam-2.onrender.com/api/cart/add",
+        `${import.meta.env.VITE_API_URL}/api/cart/add`,
         {
           method: "POST",
           headers: {
@@ -528,6 +582,94 @@ if (userId) {
                   </strong>
 
                 </div>
+
+                {/* Price + Rewards Summary */}
+                <section
+                  className="product-rewards-summary"
+                  style={{
+                    marginTop: "18px",
+                    padding: "18px",
+                    border: "1px solid #f0d6d6",
+                    borderRadius: "12px",
+                    background: "#fffafa",
+                  }}
+                >
+                  <h3 style={{ margin: "0 0 14px", color: "#d10000" }}>
+                    Price Summary & Rewards
+                  </h3>
+
+                  <div className="product-rewards-row" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "6px 0", fontSize: "14px" }}>
+                    <span>Product subtotal ({quantity} units)</span>
+                    <strong>{formatMoney(subtotal)}</strong>
+                  </div>
+
+                  <div className="product-rewards-row" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "6px 0", fontSize: "14px" }}>
+                    <span>Membership</span>
+                    <strong>{membershipName} · {membershipMultiplier}× rewards</strong>
+                  </div>
+
+                  {userId ? (
+                    <>
+                      <div className="product-rewards-row" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "6px 0", fontSize: "14px" }}>
+                        <span>Available {membershipName} coins</span>
+                        <strong>{rewardLoading ? "Loading..." : rewardCoinsAvailable.toLocaleString("en-IN")}</strong>
+                      </div>
+                      <div className="product-rewards-row" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "6px 0", fontSize: "14px" }}>
+                        <span>Coins applied automatically</span>
+                        <strong>{rewardLoading ? "Loading..." : rewardCoinsToRedeem.toLocaleString("en-IN")}</strong>
+                      </div>
+                      <div className="product-rewards-row" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "6px 0", fontSize: "14px" }}>
+                        <span>Coin discount</span>
+                        <strong style={{ color: "#16803c" }}>
+                          −{rewardLoading ? "—" : formatMoney(rewardDiscount)}
+                        </strong>
+                      </div>
+                      <div className="product-rewards-row" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "6px 0", fontSize: "14px" }}>
+                        <span>Estimated coins earned after delivery</span>
+                        <strong style={{ color: "#d10000" }}>
+                          {rewardLoading ? "Loading..." : `+${rewardCoinsEarned.toLocaleString("en-IN")} coins`}
+                        </strong>
+                      </div>
+                    </>
+                  ) : (
+                    <p style={{ margin: "8px 0", fontSize: "14px" }}>
+                      <button
+                        type="button"
+                        onClick={() => navigate("/login")}
+                        style={{
+                          padding: 0,
+                          border: 0,
+                          background: "none",
+                          color: "#d10000",
+                          cursor: "pointer",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Log in
+                      </button>{" "}
+                      to view your membership coins and rewards.
+                    </p>
+                  )}
+
+                  <div
+                    className="product-rewards-row product-rewards-total"
+                    style={{
+                      borderTop: "1px solid #eadada",
+                      marginTop: "12px",
+                      paddingTop: "12px",
+                      fontSize: "17px",
+                    }}
+                  >
+                    <span>Estimated total after coins</span>
+                    <strong style={{ color: "#d10000" }}>
+                      {formatMoney(productFinalPrice)}
+                    </strong>
+                  </div>
+
+                  <p style={{ margin: "10px 0 0", fontSize: "12px", color: "#666" }}>
+                    Coin discount is capped at 10% of this product subtotal. Rewards are credited after delivery. Shipping, if applicable, is calculated at checkout.
+                  </p>
+                </section>
 
                 {/* Add To Cart */}
                 <button
@@ -944,6 +1086,7 @@ if (userId) {
         )}
 
       </main>
+      <Footer/>
     </div>
   );
 };

@@ -12,6 +12,12 @@
   object-fit: cover;
   border-radius: 16px;
 }
+.hero-banner:hover img {
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+  
+}
 
 /* Tablet */
 @media (max-width: 900px) {

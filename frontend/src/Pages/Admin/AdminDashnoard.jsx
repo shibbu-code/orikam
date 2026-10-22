@@ -162,115 +162,13 @@ const AdminDashboard = () => {
           SIDEBAR
       ================================= */}
 
-      <aside className="admin-sidebar">
-
-        <div className="admin-logo">
-          <div className="admin-logo-icon">
-            O
-          </div>
-
-          <div className="admin-logo-text">
-            <strong>ORIKAM</strong>
-            <span>ADMIN PANEL</span>
-          </div>
-        </div>
-
-        <nav className="admin-nav">
-
-          <button className="active">
-            <LayoutDashboard size={18} />
-            <span>Dashboard</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/products")
-            }
-          >
-            <Package size={18} />
-            <span>Products</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/categories")
-            }
-          >
-            <Tags size={18} />
-            <span>Categories</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/brands")
-            }
-          >
-            <Award size={18} />
-            <span>Brands</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/inventory")
-            }
-          >
-            <Boxes size={18} />
-            <span>Inventory</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/orders")
-            }
-          >
-            <ShoppingCart size={18} />
-            <span>Orders</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/customers")
-            }
-          >
-            <Users size={18} />
-            <span>Customers</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/returns")
-            }
-          >
-            <RotateCcw size={18} />
-            <span>Returns</span>
-          </button>
-
-          <button
-            onClick={() =>
-              navigate("/admin/profile")
-            }
-          >
-            <UserCircle size={18} />
-            <span>Profile</span>
-          </button>
-
-        </nav>
-
-        <button
-          className="admin-logout"
-          onClick={handleLogout}
-        >
-          <LogOut size={18} />
-          <span>Logout</span>
-        </button>
-
-      </aside>
+      
 
       {/* ================================
           MAIN
       ================================= */}
 
-      <main className="admin-main">
+      
 
         {/* HEADER */}
 
@@ -791,7 +689,7 @@ const AdminDashboard = () => {
 
         </section>
 
-      </main>
+      
 
     </div>
   );

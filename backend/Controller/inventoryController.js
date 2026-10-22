@@ -1,4 +1,6 @@
 const Product = require("../models/Product");
+const Warehouse = require("../models/Warehouse");
+const WarehouseInventory = require("../models/WarehouseInventory");
 
 // Get all products for inventory management
 const getInventory = async (req, res) => {
@@ -6,11 +8,35 @@ const getInventory = async (req, res) => {
     const products = await Product.find()
       .populate("category", "name")
       .populate("brand", "name")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Calculate total stock from all warehouses
+    const stockTotals = await WarehouseInventory.aggregate([
+      {
+        $group: {
+          _id: "$product",
+          totalStock: { $sum: "$quantity" },
+        },
+      },
+    ]);
+
+    const stockMap = new Map(
+      stockTotals.map((item) => [
+        item._id.toString(),
+        item.totalStock,
+      ])
+    );
+
+    // Display warehouse stock as the source of truth
+    const inventoryProducts = products.map((product) => ({
+      ...product,
+      stock: stockMap.get(product._id.toString()) ?? 0,
+    }));
 
     res.status(200).json({
       message: "Inventory fetched successfully",
-      products,
+      products: inventoryProducts,
     });
   } catch (error) {
     console.error("Get inventory error:", error);
@@ -22,57 +48,13 @@ const getInventory = async (req, res) => {
   }
 };
 
-// Update product stock
+// Direct stock updates are disabled.
+// Stock must be updated through warehouse management.
 const updateStock = async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const { stock } = req.body;
-
-    if (stock === undefined || stock === null || stock === "") {
-      return res.status(400).json({
-        message: "Stock is required",
-      });
-    }
-
-    const numericStock = Number(stock);
-
-    if (Number.isNaN(numericStock) || numericStock < 0) {
-      return res.status(400).json({
-        message: "Stock must be a valid non-negative number",
-      });
-    }
-
-    const product = await Product.findByIdAndUpdate(
-      productId,
-      {
-        stock: numericStock,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    )
-      .populate("category", "name")
-      .populate("brand", "name");
-
-    if (!product) {
-      return res.status(404).json({
-        message: "Product not found",
-      });
-    }
-
-    res.status(200).json({
-      message: "Stock updated successfully",
-      product,
-    });
-  } catch (error) {
-    console.error("Update stock error:", error);
-
-    res.status(500).json({
-      message: "Failed to update stock",
-      error: error.message,
-    });
-  }
+  return res.status(400).json({
+    message:
+      "Direct stock updates are disabled. Update product quantities through Warehouse Management.",
+  });
 };
 
 module.exports = {

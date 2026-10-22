@@ -26,7 +26,7 @@ const AdminProfile = () => {
 
   const fetchAdmin = async (userId) => {
     try {
-      const response = await api.get(`/users/${userId}`);
+      const response = await api.get(`api/users/${userId}`);
 
       setAdmin(response.data.user);
     } catch (error) {

@@ -8,26 +8,49 @@
   flex-shrink: 0;
 }
 
+
 .product-image-wrapper {
-  height: 190px;
-  padding: 14px;
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f8f8f8;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: #ffffff;
 }
 
 .product-image {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.product-image-wrapper:hover .product-image {
+  transform: scale(1.04);
 }
 
 .product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #f3f4f6;
   color: #9ca3af;
   font-size: 14px;
 }
+
+
 
 .product-card-content {
   padding: 14px;
@@ -72,7 +95,7 @@
   border: none;
   border-radius: 8px;
   padding: 8px 10px;
-  background: #111827;
+  background: #d10000;
   color: white;
 
   display: flex;
@@ -84,7 +107,7 @@
 }
 
 .product-cart-button:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 .product-image-wrapper {
   position: relative;
@@ -118,4 +141,98 @@
 .product-wishlist-btn:hover {
   color: #ef4444;
   transform: scale(1.05);
+}
+
+.product-coin-reward {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0;
+  padding: 9px 10px;
+  background: #fff5f5;
+  border: 1px solid #ffe0e0;
+  border-radius: 7px;
+}
+
+.product-coin-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #444;
+  font-size: 12px;
+}
+
+.product-coin-icon {
+  color: #d10000;
+  font-size: 19px;
+  line-height: 1;
+}
+
+.product-coin-line strong {
+  color: #d10000;
+  font-weight: 700;
+}
+
+.product-coin-discount {
+  color: #666;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.product-moq-note {
+  margin: -5px 0 8px;
+  color: #888;
+  font-size: 10px;
+}
+
+.product-coin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coin-silver {
+  color: #9299a3;
+}
+
+.coin-gold {
+  color: #d4a017;
+}
+
+.coin-platinum {
+  color: #687b91;
+}
+
+.coin-diamond {
+  color: #269cc7;
+}
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 8px 0 12px;
+}
+
+.product-rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.product-rating-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+.product-cart-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.product-cart-button.product-cart-added {
+  background: #16f167;
+  color: #ffffff;
+  border-color: #16f167;
 }

@@ -1,13 +1,13 @@
 import api from "./api";
 
 export const getCustomers = () => {
-  return api.get("/customers");
+  return api.get("api/customers");
 };
 
 export const getCustomerById = (customerId) => {
-  return api.get(`/customers/${customerId}`);
+  return api.get(`api/customers/${customerId}`);
 };
 
 export const getCustomerOrders = (customerId) => {
-  return api.get(`/customers/${customerId}/orders`);
+  return api.get(`api/customers/${customerId}/orders`);
 };

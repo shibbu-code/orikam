@@ -34,7 +34,7 @@ const AddCategory = () => {
     try {
       setSaving(true);
 
-      const response = await api.post("/categories", {
+      const response = await api.post("api/categories", {
         name: formData.name,
         description: formData.description,
         image: formData.image,

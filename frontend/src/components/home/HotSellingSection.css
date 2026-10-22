@@ -25,7 +25,7 @@
 .hot-selling-view-all {
   border: none;
   background: transparent;
-  color: #2563eb;
+  color: #d10000;
 
   display: flex;
   align-items: center;
@@ -38,6 +38,7 @@
 
 .hot-selling-list {
   display: flex;
+  justify-content: space-around;
   gap: 16px;
   overflow-x: auto;
   padding-bottom: 8px;

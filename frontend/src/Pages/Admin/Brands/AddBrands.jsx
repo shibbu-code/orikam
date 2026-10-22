@@ -62,7 +62,7 @@ const AddBrand = () => {
           "Brand added successfully"
       );
 
-      navigate("/admin/brands");
+      navigate("api/admin/brands");
     } catch (error) {
       console.error("Add brand error:", error);
 

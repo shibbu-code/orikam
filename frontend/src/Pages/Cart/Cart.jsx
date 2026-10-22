@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {getRecentlyViewed} from "../../services/userApi";
 import ProductCard from "../../components/home/ProductCard";
 
+import Footer from "../../components/home/Footer"
 import Navbar from "../../components/commen/Navbar";
 
 import {
@@ -431,6 +432,7 @@ const Cart = () => {
 )}
 
       </main>
+      <Footer />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import api from "./api";
 export const getCategories = (limit) => {
   return api.get(
     limit
-      ? `/categories?limit=${limit}`
-      : "/categories"
+      ? `api/categories?limit=${limit}`
+      : "api/categories"
   );
 };

@@ -35,7 +35,7 @@ const EditAdminProfile = () => {
   const fetchProfile = async (userId) => {
     try {
       const response = await api.get(
-        `/users/${userId}`
+        `api/users/${userId}`
       );
 
       const user = response.data.user;
@@ -78,7 +78,7 @@ const EditAdminProfile = () => {
         localStorage.getItem("userId");
 
       const response = await api.put(
-        `/users/${userId}/profile`,
+        `api/users/${userId}/profile`,
         formData
       );
 

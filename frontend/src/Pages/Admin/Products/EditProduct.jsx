@@ -43,7 +43,7 @@ const EditProduct = () => {
     try {
       const [productResponse, categoryResponse, brandResponse] =
         await Promise.all([
-          fetch(`https://orikam-2.onrender.com/api/products/${productId}`),
+          fetch(`${import.meta.env.VITE_API_URL}/api/products/${productId}`),
           getCategories(),
           getBrands(),
         ]);
@@ -135,7 +135,7 @@ const removePricingTier = (index) => {
       setSaving(true);
 
       const response = await fetch(
-        `https://orikam-2.onrender.com/api/products/${productId}`,
+        `${import.meta.env.VITE_API_URL}/api/products/${productId}`,
         {
           method: "PUT",
           headers: {

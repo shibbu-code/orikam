@@ -86,7 +86,7 @@
 .edit-form-group input:focus,
 .edit-form-group textarea:focus,
 .edit-form-group select:focus {
-  border-color: #2563eb;
+  border-color: #ff2e2e;
 }
 
 .edit-form-group textarea {
@@ -115,7 +115,7 @@
 
 .edit-save-button {
   border: none;
-  background: #2563eb;
+  background: #d10000;
   color: white;
 }
 
@@ -175,9 +175,9 @@
 }
 
 .add-tier-btn {
-  border: 1px solid #6366f1;
+  border: 1px solid #ff2e2e;
   background: white;
-  color: #4f46e5;
+  color: #ff2e2e;
   padding: 8px 13px;
   border-radius: 7px;
   cursor: pointer;

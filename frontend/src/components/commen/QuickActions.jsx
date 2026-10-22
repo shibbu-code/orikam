@@ -35,7 +35,7 @@ const QuickActions = () => {
   ];
 
   return (
-    <section className="quick-actions">
+    <section className="quick-actionsx">
       <div className="quick-actions-container">
         {actions.map((action) => {
           const Icon = action.icon;

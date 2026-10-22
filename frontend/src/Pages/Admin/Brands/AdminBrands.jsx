@@ -255,7 +255,7 @@ const AdminBrands = () => {
               {filteredBrands.map((brand) => {
 
                 return (
-                  <tr key={brand._id}>
+                  <tr key={brand._id} className="admin-brand-row" onClick={() => navigate(`/admin/brands/${brand._id}`)} >
 
                     <td>
 
@@ -298,19 +298,18 @@ const AdminBrands = () => {
                     <td>
 
                       <button
-                        className={
-                          brand.isActive
-                            ? "brand-status-button active"
-                            : "brand-status-button inactive"
-                        }
-                        onClick={() =>
-                          handleStatusChange(brand)
-                        }
-                      >
-                        {brand.isActive
-                          ? "Active"
-                          : "Inactive"}
-                      </button>
+  className={
+    brand.isActive
+      ? "brand-status-button active"
+      : "brand-status-button inactive"
+  }
+  onClick={(e) => {
+    e.stopPropagation();
+    handleStatusChange(brand);
+  }}
+>
+  {brand.isActive ? "Active" : "Inactive"}
+</button>
 
                     </td>
 
@@ -319,28 +318,25 @@ const AdminBrands = () => {
                       <div className="brand-actions">
 
                         <button
-                          title="Edit"
-                          onClick={() =>
-                            navigate(
-                              `/admin/brands/edit/${brand._id}`
-                            )
-                          }
-                        >
-                          <Edit size={17} />
-                        </button>
+  title="Edit"
+  onClick={(e) => {
+    e.stopPropagation();
+    navigate(`/admin/brands/edit/${brand._id}`);
+  }}
+>
+  <Edit size={17} />
+</button>
 
                         <button
-                          title="Delete"
-                          className="delete-action"
-                          onClick={() =>
-                            alert(
-                              "Delete API will be connected later."
-                            )
-                          }
-                        >
-                          <Trash2 size={17} />
-                        </button>
-
+  title="Delete"
+  className="delete-action"
+  onClick={(e) => {
+    e.stopPropagation();
+    alert("Delete API will be connected later.");
+  }}
+>
+  <Trash2 size={17} />
+</button>
                       </div>
 
                     </td>

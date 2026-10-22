@@ -1,9 +1,19 @@
 import React from "react";
 import "./BrandCard.css";
 
-const BrandCard = ({ brand }) => {
+const BrandCard = ({ brand, onClick }) => {
   return (
-    <div className="brand-card">
+    <div className="brand-card"
+     onClick={onClick}
+  role="button"
+  tabIndex={0}
+  onKeyDown={(e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onClick?.();
+    }
+  }}
+    >
       <div className="brand-card-image">
         {brand.logo ? (
           <img

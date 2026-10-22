@@ -212,3 +212,45 @@
     width: 100%;
   }
 }
+
+/* Dropdown focus */
+.product-filter-bar .filter-group select:focus,
+.product-filter-bar .filter-group input:focus {
+  outline: none;
+  border-color: #d10000;
+  box-shadow: 0 0 0 2px rgba(209, 0, 0, 0.1);
+}
+
+/* Dropdown selected option */
+.product-filter-bar .filter-group select option:checked {
+  background-color: #d10000;
+  color: #ffffff;
+}
+
+/* Checkbox and radio accents, if used */
+.product-filter-bar input[type="checkbox"],
+.product-filter-bar input[type="radio"] {
+  accent-color: #d10000;
+}
+
+/* Clear filter button */
+.clear-filter-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff1f1;
+  color: #d10000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-filter-button:hover {
+  background: #d10000;
+  color: #ffffff;
+  border-color: #d10000;
+}

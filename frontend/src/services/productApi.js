@@ -27,24 +27,24 @@ export const getProducts = (filters = {}) => {
     params.append("sort", filters.sort);
   }
 
-  return api.get(`/products?${params.toString()}`);
+  return api.get(`api/products?${params.toString()}`);
 };
 
 export const getHotSellingProducts = () => {
-  return api.get("/products/hot-selling");
+  return api.get("api/products/hot-selling");
 };
 
 export const getProductsByCategory = (categoryId) => {
-  return api.get(`/products/category/${categoryId}`);
+  return api.get(`api/products/category/${categoryId}`);
 };
 
 export const getProductsByBrand = (brandId) => {
-  return api.get(`/products/brand/${brandId}`);
+  return api.get(`api/products/brand/${brandId}`);
 };
 
 export const getProductById = (productId) => {
-  return api.get(`/products/${productId}`);
+  return api.get(`api/products/${productId}`);
 };
 
 export const getSimilarProducts = (productId) =>
-  api.get(`/products/${productId}/similar`);
+  api.get(`api/products/${productId}/similar`);

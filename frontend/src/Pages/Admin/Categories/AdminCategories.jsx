@@ -37,7 +37,7 @@ const [sortBy, setSortBy] = useState("newest");
   const handleStatusChange = async (category) => {
     try {
       const response = await api.patch(
-        `/categories/${category._id}/status`,
+        `api/categories/${category._id}/status`,
         {
           isActive: !category.isActive,
         }
@@ -211,7 +211,7 @@ const [sortBy, setSortBy] = useState("newest");
                 const image = category.image || "";
 
                 return (
-                  <tr key={category._id}>
+                  <tr key={category._id} className="admin-category-row" onClick={() => navigate(`/admin/categories/${category._id}`) } >
 
                     {/* Category */}
                     <td>
@@ -249,19 +249,18 @@ const [sortBy, setSortBy] = useState("newest");
                     {/* Status */}
                     <td>
                       <button
-                        className={
-                          category.isActive
-                            ? "category-status-button active"
-                            : "category-status-button inactive"
-                        }
-                        onClick={() =>
-                          handleStatusChange(category)
-                        }
-                      >
-                        {category.isActive
-                          ? "Active"
-                          : "Inactive"}
-                      </button>
+                    className={
+                      category.isActive
+                        ? "product-status-button active"
+                        : "product-status-button inactive"
+                    }
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleStatusChange(category);
+                    }}
+                  >
+                    {category.isActive ? "Active" : "Inactive"}
+                  </button>
                     </td>
 
                     {/* Actions */}
@@ -269,27 +268,25 @@ const [sortBy, setSortBy] = useState("newest");
                       <div className="category-actions">
 
                         <button
-                          title="Edit"
-                          onClick={() =>
-                            navigate(
-                              `/admin/categories/edit/${category._id}`
-                            )
-                          }
-                        >
-                          <Edit size={17} />
-                        </button>
+  title="Edit"
+  onClick={(e) => {
+    e.stopPropagation();
+    navigate(`/admin/categories/edit/${category._id}`);
+  }}
+>
+  <Edit size={17} />
+</button>
 
-                        <button
-                          title="Delete"
-                          className="delete-action"
-                          onClick={() =>
-                            alert(
-                              "Delete API will be connected later."
-                            )
-                          }
-                        >
-                          <Trash2 size={17} />
-                        </button>
+                       <button
+  title="Delete"
+  className="delete-action"
+  onClick={(e) => {
+    e.stopPropagation();
+    alert("Delete API will be connected later.");
+  }}
+>
+  <Trash2 size={17} />
+</button>
 
                       </div>
                     </td>

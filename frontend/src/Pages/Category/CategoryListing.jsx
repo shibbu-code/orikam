@@ -5,7 +5,8 @@ import {
   ArrowUpDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import Footer from "../../components/home/Footer"
+import HeroBanner3 from "../../components/banner/HeroBanner3";
 import Navbar from "../../components/commen/Navbar";
 import { getCategories } from "../../services/categoryApi";
 
@@ -105,7 +106,7 @@ const CategoryListing = () => {
   return (
     <div className="category-brand-page">
       <Navbar />
-
+      <HeroBanner3 />
       <main className="category-brand-container">
 
         {/* Back */}
@@ -277,6 +278,7 @@ const CategoryListing = () => {
         )}
 
       </main>
+      <Footer/>
     </div>
   );
 };

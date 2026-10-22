@@ -36,8 +36,8 @@ const AdminCustomers = () => {
 
       const [customerResponse, orderResponse] =
         await Promise.all([
-          api.get("/customers"),
-          api.get("/orders"),
+          api.get("api/customers"),
+          api.get("api/orders"),
         ]);
 
       setCustomers(

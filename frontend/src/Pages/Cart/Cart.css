@@ -23,6 +23,9 @@
   color: #374151;
   cursor: pointer;
 }
+.cart-back:hover {
+  color: #d10000;
+}
 
 .cart-header {
   display: flex;
@@ -225,7 +228,7 @@
   border: none;
   border-radius: 8px;
 
-  background: #111827;
+  background: #d10000;
   color: #ffffff;
 
   font-size: 15px;
@@ -233,7 +236,9 @@
 
   cursor: pointer;
 }
-
+.checkout-button:hover {
+  background: #a30000;
+}
 .cart-empty,
 .cart-loading {
   min-height: 400px;
@@ -262,7 +267,7 @@
   border-radius: 8px;
   padding: 11px 18px;
 
-  background: #111827;
+  background: #d10000;
   color: white;
 
   cursor: pointer;
@@ -317,7 +322,7 @@
 .recently-viewed-label {
   display: block;
   margin-bottom: 6px;
-  color: #2563eb;
+  color: #d10000;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.2px;
@@ -339,7 +344,7 @@
 .recently-viewed-browse {
   border: none;
   background: transparent;
-  color: #2563eb;
+  color: #d10000;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;

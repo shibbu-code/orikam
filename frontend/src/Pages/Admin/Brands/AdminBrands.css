@@ -1,6 +1,8 @@
+
 .admin-brands-page {
   min-height: 100vh;
   padding: 32px;
+  box-sizing: border-box;
   background: #f8fafc;
 }
 
@@ -8,33 +10,49 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   margin-bottom: 28px;
 }
 
 .admin-brands-header h1 {
   margin: 0;
   font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   color: #111827;
 }
 
 .admin-brands-header p {
   margin: 6px 0 0;
+  font-size: 14px;
   color: #64748b;
 }
 
+/* ADD BRAND BUTTON */
 .add-brand-button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  border: none;
-  background: #2563eb;
-  color: white;
+  border: 1px solid #d10000;
+  background: #d10000;
+  color: #ffffff;
   padding: 11px 16px;
   border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
+.add-brand-button:hover {
+  background: #ff2e2e;
+  border-color: #ff2e2e;
+  box-shadow: 0 4px 10px rgba(209, 0, 0, 0.15);
+}
+
+/* TOOLBAR */
 .admin-brands-toolbar {
   display: flex;
   justify-content: space-between;
@@ -49,16 +67,29 @@
   gap: 8px;
   width: 320px;
   padding: 10px 12px;
-  background: white;
+  background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-brand-search:focus-within {
+  border-color: #d10000;
+  box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.07);
 }
 
 .admin-brand-search input {
   width: 100%;
+  min-width: 0;
   border: none;
   outline: none;
+  background: transparent;
+  color: #111827;
   font-size: 14px;
+}
+
+.admin-brand-search input::placeholder {
+  color: #9ca3af;
 }
 
 .admin-brand-filters {
@@ -71,11 +102,17 @@
   padding: 10px 12px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  background: white;
+  background: #ffffff;
   color: #374151;
   font-size: 14px;
   cursor: pointer;
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-brand-filters select:focus {
+  border-color: #d10000;
+  box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.07);
 }
 
 .admin-brand-count {
@@ -84,16 +121,19 @@
   white-space: nowrap;
 }
 
+/* BRANDS TABLE */
 .admin-brands-table-wrapper {
-  background: white;
+  background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
 }
 
 .admin-brands-table {
   width: 100%;
   border-collapse: collapse;
+  white-space: nowrap;
 }
 
 .admin-brands-table th,
@@ -104,11 +144,24 @@
 }
 
 .admin-brands-table th {
-  background: #f8fafc;
+  background: #fafafa;
   color: #64748b;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
+.admin-brands-table td {
+  font-size: 13px;
+  color: #374151;
+}
+
+.admin-brands-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* BRAND INFORMATION */
 .admin-brand-info {
   display: flex;
   align-items: center;
@@ -118,8 +171,10 @@
 .admin-brand-image {
   width: 44px;
   height: 44px;
+  flex-shrink: 0;
   border-radius: 8px;
-  background: #f1f5f9;
+  background: #f9fafb;
+  border: 1px solid #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,6 +190,8 @@
 .admin-brand-info strong {
   display: block;
   color: #111827;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .admin-brand-info span {
@@ -144,6 +201,7 @@
   color: #94a3b8;
 }
 
+/* STATUS */
 .brand-status-button {
   border: none;
   padding: 6px 12px;
@@ -151,6 +209,7 @@
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .brand-status-button.active {
@@ -158,39 +217,61 @@
   color: #166534;
 }
 
+.brand-status-button.active:hover {
+  background: #bbf7d0;
+}
+
 .brand-status-button.inactive {
   background: #fee2e2;
   color: #991b1b;
 }
 
+.brand-status-button.inactive:hover {
+  background: #fecaca;
+}
+
+/* ACTION BUTTONS */
 .brand-actions {
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
 .brand-actions button {
   width: 34px;
   height: 34px;
+  flex-shrink: 0;
   border: 1px solid #e5e7eb;
-  background: white;
+  background: #ffffff;
+  color: #64748b;
   border-radius: 7px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .brand-actions button:hover {
-  background: #f8fafc;
+  background: #fff1f1;
+  border-color: #fecaca;
+  color: #d10000;
 }
 
 .brand-actions .delete-action {
   color: #dc2626;
 }
 
+.brand-actions .delete-action:hover {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+/* LOADING AND EMPTY STATES */
 .admin-brands-loading,
 .admin-brands-empty {
-  padding: 60px;
+  padding: 60px 20px;
   text-align: center;
   color: #64748b;
 }
@@ -198,8 +279,25 @@
 .admin-brands-empty h2 {
   color: #111827;
   margin: 12px 0 6px;
+  font-size: 20px;
 }
 
+.admin-brands-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ROW HOVER */
+.admin-brand-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.admin-brand-row:hover {
+  background-color: #fffafa;
+}
+
+/* RESPONSIVE */
 @media (max-width: 900px) {
   .admin-brands-toolbar {
     flex-wrap: wrap;
@@ -207,6 +305,7 @@
 
   .admin-brand-search {
     width: 100%;
+    box-sizing: border-box;
   }
 
   .admin-brand-filters {
@@ -217,7 +316,7 @@
 
 @media (max-width: 700px) {
   .admin-brands-page {
-    padding: 20px;
+    padding: 20px 16px;
   }
 
   .admin-brands-header {
@@ -225,4 +324,27 @@
     align-items: flex-start;
     gap: 16px;
   }
+
+  .admin-brands-header h1 {
+    font-size: 24px;
+  }
+
+  .add-brand-button {
+    width: 100%;
+  }
+
+  .admin-brand-count {
+    white-space: normal;
+  }
 }
+
+@media (max-width: 400px) {
+  .admin-brands-page {
+    padding: 16px 12px;
+  }
+
+  .admin-brand-filters select {
+    width: 100%;
+  }
+}
+

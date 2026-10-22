@@ -79,7 +79,7 @@
 
 .edit-category-group input:focus,
 .edit-category-group textarea:focus {
-  border-color: #2563eb;
+  border-color: #ff2e2e;
 }
 
 .edit-category-group textarea {
@@ -121,7 +121,7 @@
 }
 
 .category-save-button {
-  background: #2563eb;
+  background: #d10000;
   color: white;
   border: none;
 }

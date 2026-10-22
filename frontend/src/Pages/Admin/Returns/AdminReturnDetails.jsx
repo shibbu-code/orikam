@@ -27,7 +27,7 @@ const AdminReturnDetails = () => {
     try {
       setLoading(true);
 
-      const response = await api.get(`/orders/${orderId}`);
+      const response = await api.get(`api/orders/${orderId}`);
 
       const fetchedOrder = response.data.order;
 

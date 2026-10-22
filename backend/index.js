@@ -15,14 +15,18 @@ const orderRoutes = require('./routes/orderRoutes')
 const adminDashboardRoutes = require("./routes/adminRoutes");
 const inventoryRoutes = require('./routes/inventoryRoutes')
 const customerRoutes = require('./routes/customerRoutes')
-
+const warehouseRoutes = require('./routes/warehouseRoutes')
+const membershipRoutes = require('./routes/membershipRoutes')
+const contactRoutes = require('./routes/contactRoutes')
 
 dotenv.config();
+
 connectDB();
 
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/contact", contactRoutes);
 app.use("/api/admin/dashboard", adminDashboardRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/wishlist", wishlistRoutes);
@@ -34,6 +38,8 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/inventory", inventoryRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/warehouses", warehouseRoutes);
+app.use("/api/membership", membershipRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

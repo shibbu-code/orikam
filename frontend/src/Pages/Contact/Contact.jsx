@@ -7,8 +7,10 @@ import {
   Send,
 } from "lucide-react";
 
+import Footer from "../../components/home/Footer";
 import Navbar from "../../components/commen/Navbar";
 import "./Contact.css";
+
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -19,6 +21,11 @@ const Contact = () => {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+const [status, setStatus] = useState({
+  type: "",
+  message: "",
+});
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -26,10 +33,35 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ 
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    alert("Thank you! Your inquiry has been submitted.");
+  setLoading(true);
+  setStatus({ type: "", message: "" });
+
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/contact`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to send your inquiry.");
+    }
+
+    setStatus({
+      type: "success",
+      message: data.message || "Your inquiry has been sent successfully!",
+    });
 
     setForm({
       name: "",
@@ -38,7 +70,18 @@ const Contact = () => {
       subject: "",
       message: "",
     });
-  };
+  } catch (error) {
+    console.error("Contact form error:", error);
+
+    setStatus({
+      type: "error",
+      message: error.message || "Unable to send your inquiry. Please try again.",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="contact-page">
@@ -222,14 +265,24 @@ const Contact = () => {
                   required
                 />
               </div>
+              {status.message && (
+  <p
+    className={`contact-status ${status.type}`}
+    role="status"
+    aria-live="polite"
+  >
+    {status.message}
+  </p>
+)}
 
               <button
-                className="contact-submit"
-                type="submit"
-              >
-                Send Message
-                <Send size={16} />
-              </button>
+  className="contact-submit"
+  type="submit"
+  disabled={loading}
+>
+  {loading ? "Sending..." : "Send Message"}
+  {!loading && <Send size={16} />}
+</button>
 
             </form>
 
@@ -237,6 +290,7 @@ const Contact = () => {
 
         </section>
       </main>
+      <Footer />
     </div>
   );
 };

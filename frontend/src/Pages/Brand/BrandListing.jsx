@@ -5,7 +5,8 @@ import {
   ArrowUpDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import HeroBanner2 from "../../components/banner/HeroBanner2";
+import Footer from "../../components/home/Footer";
 import Navbar from "../../components/commen/Navbar";
 import { getBrands } from "../../services/brandApi";
 
@@ -105,7 +106,7 @@ const BrandListing = () => {
   return (
     <div className="category-brand-page">
       <Navbar />
-
+      <HeroBanner2 />
       <main className="category-brand-container">
 
         {/* Back */}
@@ -275,8 +276,8 @@ const BrandListing = () => {
 
           </div>
         )}
-
-      </main>
+    
+      </main> <Footer/>
     </div>
   );
 };

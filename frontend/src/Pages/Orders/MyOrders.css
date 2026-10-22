@@ -212,7 +212,9 @@
 }
 
 .my-order-footer button:hover {
-  background: #f1f5f9;
+  
+  border-color: #d10000;
+  color: #d10000;
 }
 
 .orders-empty,

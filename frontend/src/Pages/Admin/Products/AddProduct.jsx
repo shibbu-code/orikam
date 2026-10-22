@@ -83,7 +83,7 @@ const AddProduct = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://orikam-2.onrender.com/api/products/add",
+        `${import.meta.env.VITE_API_URL}/api/products/add`,
         {
           method: "POST",
           headers: {

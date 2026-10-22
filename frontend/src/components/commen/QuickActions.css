@@ -1,20 +1,27 @@
-.quick-actions {
+.quick-actionsx {
   width: 100%;
   background: #ffffff;
-  border-top: 1px solid #e5e7eb;
+  margin-top: -15px;
   border-bottom: 1px solid #e5e7eb;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center ;
+  box-sizing: border-box;
 }
 
 .quick-actions-container {
-  max-width: 900px;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
   min-height: 72px;
 
-  display: flex;
-  align-items: center;
+ display: flex;
+ align-items: center;
   justify-content: center;
+box-sizing: border-box;
+ 
   gap: 70px;
-
   padding: 0 24px;
 }
 
@@ -41,12 +48,12 @@
 }
 
 .quick-action:hover {
-  color: #111827;
+  color: #d10000;
   transform: translateY(-1px);
 }
 
 .quick-action:hover svg {
-  color: #111827;
+  color: #d10000;
 }
 
 /* Tablet */

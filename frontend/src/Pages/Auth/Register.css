@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #111827;
+  background: #d10000;
   color: #ffffff;
   border-radius: 10px;
   font-size: 20px;
@@ -43,14 +43,14 @@
   font-size: 19px;
   font-weight: 800;
   letter-spacing: 1.5px;
-  color: #111827;
+  color: #d10000;
 }
 
 .brand-subtitle {
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 1.8px;
-  color: #6b7280;
+  color: #ff2e2e;
   margin-top: 2px;
 }
 
@@ -96,7 +96,7 @@
 }
 
 .input-wrapper:focus-within {
-  border-color: #111827;
+  border-color: #d10000;
   box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
 }
 
@@ -126,7 +126,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: #ff2e2e;
   cursor: pointer;
 }
 
@@ -148,7 +148,7 @@
   height: 48px;
   border: none;
   border-radius: 9px;
-  background: #111827;
+  background: #d10000;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -178,7 +178,7 @@
 }
 
 .register-footer span {
-  color: #111827;
+  color: #d10000;
   font-weight: 600;
   cursor: pointer;
 }

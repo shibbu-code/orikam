@@ -272,7 +272,7 @@
 }
 
 .directory-card-link {
-  color: #2563eb;
+  color: #d10000;
 
   font-size: 12px;
   font-weight: 600;
@@ -369,3 +369,19 @@
     flex-direction: column;
   }
 }
+
+.directory-sort select {
+  accent-color: #d10000;
+  outline: none;
+}
+
+.directory-sort select:focus {
+  border-color: #d10000;
+  box-shadow: 0 0 0 2px rgba(209, 0, 0, 0.1);
+}
+
+.directory-sort select option:checked {
+  background-color: #d10000;
+  color: #ffffff;
+}
+

@@ -11,6 +11,7 @@ import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+   
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +34,8 @@ const Login = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://orikam-2.onrender.com/api/users/login",
+        `${import.meta.env.VITE_API_URL}/api/users/login`,
+
         {
           method: "POST",
           headers: {

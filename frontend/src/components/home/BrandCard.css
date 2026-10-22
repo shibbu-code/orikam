@@ -10,7 +10,7 @@
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-
+ cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 

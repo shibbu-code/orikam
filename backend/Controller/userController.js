@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Product = require("../models/Product");
+const mongoose = require("mongoose")
 
 const createCustomer = async (req, res) => {
   try {
@@ -117,49 +118,90 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  try {
-    const { name, email, password, phone } = req.body;
+try {
+const { name, email, password, phone, referralCode } = req.body;
 
-    // Validate required fields
-    if (!name || !email || !password) {
-      return res.status(400).json({
-        message: "Name, email and password are required",
-      });
-    }
+if (!name || !email || !password) {
+  return res.status(400).json({
+    message: "Name, email and password are required",
+  });
+}
 
-    // Check existing user
-    const existingUser = await User.findOne({ email });
+const normalizedEmail = email.trim().toLowerCase();
 
-    if (existingUser) {
-      return res.status(400).json({
-        message: "User with this email already exists",
-      });
-    }
+const existingUser = await User.findOne({
+  email: normalizedEmail,
+});
 
-    // Create customer
-    const user = await User.create({
-      name,
-      email,
-      password,
-      phone,
-      role: "customer",
-    });
+if (existingUser) {
+  return res.status(400).json({
+    message: "User with this email already exists",
+  });
+}
 
-    // Remove password from response
-    const userData = user.toObject();
-    delete userData.password;
+let referrer = null;
 
-    res.status(201).json({
-      message: "Registration successful",
-      user: userData,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Registration failed",
-      error: error.message,
+// Validate referral code if provided
+if (referralCode) {
+  referrer = await User.findOne({
+    referralCode: referralCode.trim().toUpperCase(),
+    role: "customer",
+  });
+
+  if (!referrer) {
+    return res.status(400).json({
+      message: "Invalid referral code",
     });
   }
+}
+
+// Generate a unique referral code
+let newReferralCode;
+let codeExists = true;
+
+while (codeExists) {
+  newReferralCode =
+    "ORI" +
+    Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  codeExists = await User.exists({
+    referralCode: newReferralCode,
+  });
+}
+
+const user = await User.create({
+  name: name.trim(),
+  email: normalizedEmail,
+  password,
+  phone,
+  role: "customer",
+  referralCode: newReferralCode,
+  referredBy: referrer ? referrer._id : null,
+  referralRewardClaimed: false,
+});
+
+const userData = user.toObject();
+delete userData.password;
+
+res.status(201).json({
+  message: "Registration successful",
+  user: userData,
+});
+
+
+} catch (error) {
+console.error("Registration error:", error);
+
+
+res.status(500).json({
+  message: "Registration failed",
+  error: error.message,
+});
+
+
+}
 };
+
 
 const updateUserProfile = async (req, res) => {
   try {
@@ -300,6 +342,299 @@ const getRecentlyViewed = async (req, res) => {
   }
 };
 
+const getUserAddresses = async (req, res) => {
+try {
+const { userId } = req.params;
+
+if (!mongoose.isValidObjectId(userId)) {
+  return res.status(400).json({ message: "Invalid user ID" });
+}
+
+const user = await User.findById(userId).select("addresses");
+
+if (!user) {
+  return res.status(404).json({ message: "User not found" });
+}
+
+res.status(200).json({
+  message: "Addresses fetched successfully",
+  addresses: user.addresses || [],
+});
+
+} catch (error) {
+console.error("Get addresses error:", error);
+res.status(500).json({
+message: "Failed to fetch addresses",
+error: error.message,
+});
+}
+};
+
+const addUserAddress = async (req, res) => {
+try {
+const { userId } = req.params;
+console.log(userId);
+const {
+  fullName,
+  phone,
+  addressLine,
+  landmark,
+  city,
+  state,
+  pincode,
+  addressType,
+  isDefault,
+} = req.body;
+
+if (!mongoose.isValidObjectId(userId)) {
+  return res.status(400).json({ message: "Invalid user ID" });
+}
+
+if (
+  !fullName?.trim() ||
+  !phone?.trim() ||
+  !addressLine?.trim() ||
+  !city?.trim() ||
+  !state?.trim() ||
+  !pincode?.trim()
+) {
+  return res.status(400).json({
+    message:
+      "Full name, phone, address, city, state and pincode are required",
+  });
+}
+
+if (
+  addressType !== undefined &&
+  !["Home", "Office", "Other"].includes(addressType)
+) {
+  return res.status(400).json({
+    message: "Address type must be Home, Office or Other",
+  });
+}
+
+const user = await User.findById(userId);
+
+if (!user) {
+  return res.status(404).json({ message: "User not found" });
+}
+
+const makeDefault =
+  user.addresses.length === 0 || isDefault === true;
+
+if (makeDefault) {
+  user.addresses.forEach((address) => {
+    address.isDefault = false;
+  });
+}
+
+user.addresses.push({
+  fullName: fullName.trim(),
+  phone: phone.trim(),
+  addressLine: addressLine.trim(),
+  landmark: landmark?.trim() || "",
+  city: city.trim(),
+  state: state.trim(),
+  pincode: pincode.trim(),
+  addressType: addressType || "Home",
+  isDefault: makeDefault,
+});
+
+await user.save();
+
+const newAddress = user.addresses[user.addresses.length - 1];
+
+res.status(201).json({
+  message: "Address added successfully",
+  address: newAddress,
+  addresses: user.addresses,
+});
+
+} catch (error) {
+console.error("Add address error:", error);
+res.status(500).json({
+message: "Failed to add address",
+error: error.message,
+});
+}
+};
+
+const updateUserAddress = async (req, res) => {
+try {
+const { userId, addressId } = req.params;
+
+if (
+  !mongoose.isValidObjectId(userId) ||
+  !mongoose.isValidObjectId(addressId)
+) {
+  return res.status(400).json({
+    message: "Invalid user ID or address ID",
+  });
+}
+
+const allowedFields = [
+  "fullName",
+  "phone",
+  "addressLine",
+  "landmark",
+  "city",
+  "state",
+  "pincode",
+  "addressType",
+];
+
+const updates = {};
+
+for (const field of allowedFields) {
+  if (req.body[field] !== undefined) {
+    updates[field] =
+      typeof req.body[field] === "string"
+        ? req.body[field].trim()
+        : req.body[field];
+  }
+}
+
+if (Object.keys(updates).length === 0) {
+  return res.status(400).json({
+    message: "Provide at least one address field to update",
+  });
+}
+
+if (
+  updates.addressType !== undefined &&
+  !["Home", "Office", "Other"].includes(updates.addressType)
+) {
+  return res.status(400).json({
+    message: "Address type must be Home, Office or Other",
+  });
+}
+
+const user = await User.findById(userId);
+
+if (!user) {
+  return res.status(404).json({ message: "User not found" });
+}
+
+const address = user.addresses.id(addressId);
+
+if (!address) {
+  return res.status(404).json({ message: "Address not found" });
+}
+
+Object.assign(address, updates);
+
+await user.save();
+
+res.status(200).json({
+  message: "Address updated successfully",
+  address,
+  addresses: user.addresses,
+});
+
+} catch (error) {
+console.error("Update address error:", error);
+res.status(500).json({
+message: "Failed to update address",
+error: error.message,
+});
+}
+};
+
+const deleteUserAddress = async (req, res) => {
+try {
+const { userId, addressId } = req.params;
+
+if (
+  !mongoose.isValidObjectId(userId) ||
+  !mongoose.isValidObjectId(addressId)
+) {
+  return res.status(400).json({
+    message: "Invalid user ID or address ID",
+  });
+}
+
+const user = await User.findById(userId);
+
+if (!user) {
+  return res.status(404).json({ message: "User not found" });
+}
+
+const address = user.addresses.id(addressId);
+
+if (!address) {
+  return res.status(404).json({ message: "Address not found" });
+}
+
+const wasDefault = address.isDefault;
+
+user.addresses.pull({ _id: addressId });
+
+if (wasDefault && user.addresses.length > 0) {
+  user.addresses[0].isDefault = true;
+}
+
+await user.save();
+
+res.status(200).json({
+  message: "Address deleted successfully",
+  addresses: user.addresses,
+});
+
+} catch (error) {
+console.error("Delete address error:", error);
+res.status(500).json({
+message: "Failed to delete address",
+error: error.message,
+});
+}
+};
+
+const setDefaultUserAddress = async (req, res) => {
+try {
+const { userId, addressId } = req.params;
+
+if (
+  !mongoose.isValidObjectId(userId) ||
+  !mongoose.isValidObjectId(addressId)
+) {
+  return res.status(400).json({
+    message: "Invalid user ID or address ID",
+  });
+}
+
+const user = await User.findById(userId);
+
+if (!user) {
+  return res.status(404).json({ message: "User not found" });
+}
+
+const selectedAddress = user.addresses.id(addressId);
+
+if (!selectedAddress) {
+  return res.status(404).json({ message: "Address not found" });
+}
+
+user.addresses.forEach((address) => {
+  address.isDefault = address._id.equals(selectedAddress._id);
+});
+
+await user.save();
+
+res.status(200).json({
+  message: "Default address updated successfully",
+  address: selectedAddress,
+  addresses: user.addresses,
+});
+
+} catch (error) {
+console.error("Set default address error:", error);
+res.status(500).json({
+message: "Failed to set default address",
+error: error.message,
+});
+}
+};
+
 module.exports = {
   createCustomer,
   getUserDetails,
@@ -308,4 +643,10 @@ module.exports = {
   updateUserProfile,
   addRecentlyViewed,
   getRecentlyViewed,
+  getUserAddresses,
+  addUserAddress,
+  updateUserAddress,
+  deleteUserAddress,
+  setDefaultUserAddress,
+
 };

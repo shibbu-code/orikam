@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #111827;
+  background: #d10000;
   color: #ffffff;
   border-radius: 10px;
 }
@@ -42,14 +42,14 @@
   font-size: 19px;
   font-weight: 800;
   letter-spacing: 1.5px;
-  color: #111827;
+  color: #d10000;
 }
 
 .brand-subtitle {
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 1.8px;
-  color: #6b7280;
+  color: #ff2e2e;
   margin-top: 2px;
 }
 
@@ -92,7 +92,11 @@
   align-items: center;
   gap: 10px;
   padding: 0 14px;
+<<<<<<< HEAD
   border: 1px solid #d1d5db;
+=======
+  border: 1px solid #d10000;
+>>>>>>> 011b1ce (ui changes)
   border-radius: 1px;
   background: #ffffff;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -117,7 +121,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: #d10000;
   cursor: pointer;
 }
 
@@ -143,7 +147,11 @@
   height: 48px;
   border: none;
   border-radius: 5px;
+<<<<<<< HEAD
   background: #111827;
+=======
+  background: #d10000;
+>>>>>>> 011b1ce (ui changes)
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -174,7 +182,7 @@
 }
 
 .login-footer span {
-  color: #111827;
+  color: #d10000;
   font-weight: 600;
   cursor: pointer;
 }
@@ -230,12 +238,12 @@
 }
 
 .role-selection button:hover {
-  color: #2563eb;
+  color: #d10000;
 }
 
 .role-selection button.active {
   background: #ffffff;
-  color: #2563eb;
+  color: #d10000;
 
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }

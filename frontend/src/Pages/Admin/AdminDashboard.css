@@ -1,26 +1,16 @@
 .admin-dashboard {
+  width: 100%;
   min-height: 100vh;
-  display: flex;
   background: #f8fafc;
   color: #0f172a;
+  box-sizing: border-box;
 }
 
 /* =========================================
    SIDEBAR
 ========================================= */
 
-.admin-sidebar {
-  width: 240px;
-  min-height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  display: flex;
-  flex-direction: column;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  flex-shrink: 0;
-}
+
 
 .admin-logo {
   height: 76px;
@@ -35,7 +25,7 @@
   width: 36px;
   height: 36px;
   border-radius: 9px;
-  background: #2563eb;
+  background: #d10000;
   color: white;
   display: flex;
   align-items: center;
@@ -66,69 +56,6 @@
    NAVIGATION
 ========================================= */
 
-.admin-nav {
-  padding: 18px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-}
-
-.admin-nav button {
-  width: 100%;
-  height: 43px;
-  border: none;
-  background: transparent;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 13px;
-  color: #64748b;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: left;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.admin-nav button:hover {
-  background: #f1f5f9;
-  color: #2563eb;
-}
-
-.admin-nav button.active {
-  background: #eff6ff;
-  color: #2563eb;
-}
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-.admin-logout {
-  margin: 12px;
-  height: 43px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 0 13px;
-  color: #64748b;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.admin-logout:hover {
-  color: #dc2626;
-  background: #fef2f2;
-  border-color: #fecaca;
-}
 
 /* =========================================
    MAIN
@@ -269,8 +196,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #fff1f1;
+  color: #d10000;
 }
 
 .stat-icon.orders {
@@ -314,7 +241,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #2563eb;
+  color: #d10000;
   font-size: 11px;
   font-weight: 700;
   cursor: pointer;
@@ -377,8 +304,8 @@
 
 .quick-actions button:hover {
   transform: translateY(-1px);
-  border-color: #bfdbfe;
-  box-shadow: 0 5px 15px rgba(15, 23, 42, 0.05);
+  border-color: #fecaca;
+  box-shadow: 0 5px 15px rgba(209, 0, 0, 0.06);
 }
 
 .quick-action-icon {
@@ -386,7 +313,7 @@
   height: 36px;
   border-radius: 8px;
   background: #eff6ff;
-  color: #2563eb;
+  color: #d10000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -446,7 +373,7 @@
 .panel-header button {
   border: none;
   background: transparent;
-  color: #2563eb;
+  color: #d10000;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -761,10 +688,11 @@
   padding: 0 20px;
   border: none;
   border-radius: 7px;
-  background: #2563eb;
+  background: #d10000;
   color: #ffffff;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 /* =========================================

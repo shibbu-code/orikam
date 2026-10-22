@@ -32,7 +32,7 @@
 
   padding: 11px 16px;
 
-  background: #2563eb;
+  background: #d10000;
   color: white;
 
   font-weight: 600;
@@ -272,4 +272,13 @@
 
 .product-status-button:hover {
   opacity: 0.8;
+}
+
+.admin-product-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.admin-product-row:hover {
+  background-color: #f8fafc;
 }

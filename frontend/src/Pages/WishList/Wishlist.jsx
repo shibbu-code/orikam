@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/commen/Navbar";
 import ProductCard from "../../components/home/ProductCard";
 import { getWishlist } from "../../services/wishlistApi";
-
+import Footer from "../../components/home/Footer"
 import "./Wishlist.css";
 
 const Wishlist = () => {
@@ -113,7 +113,7 @@ const Wishlist = () => {
             ))}
           </div>
         )}
-
+     <Footer/>
       </main>
     </>
   );

@@ -29,7 +29,7 @@ const AdminOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await api.get("/orders");
+      const response = await api.get("api/orders");
 
       setOrders(response.data.orders || []);
     } catch (error) {

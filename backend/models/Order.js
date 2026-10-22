@@ -161,7 +161,24 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
+    // Coin rewards
+coinsEarned: {
+  type: Number,
+  default: 0,
+  min: 0,
+},
+
+coinsRewarded: {
+  type: Boolean,
+  default: false,
+},
+
+referralRewardProcessed: {
+  type: Boolean,
+  default: false,
+},
   },
+  
   {
     timestamps: true,
   }

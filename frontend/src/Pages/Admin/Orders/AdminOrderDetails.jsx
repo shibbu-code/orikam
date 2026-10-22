@@ -37,7 +37,7 @@ const AdminOrderDetails = () => {
 
   const fetchOrder = async () => {
     try {
-      const response = await api.get(`/orders/${orderId}`);
+      const response = await api.get(`api/orders/${orderId}`);
 
       const fetchedOrder = response.data.order;
 
@@ -57,7 +57,7 @@ const AdminOrderDetails = () => {
       setUpdating(true);
 
       const response = await api.patch(
-        `/orders/${orderId}/status`,
+        `api/orders/${orderId}/status`,
         {
           status: newStatus,
           note: statusNote,

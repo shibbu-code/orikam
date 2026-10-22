@@ -1,6 +1,7 @@
+
 .contact-page {
   min-height: 100vh;
-  background: #f8fafc;
+  background: #fafafa;
 }
 
 .contact-container {
@@ -9,16 +10,18 @@
   padding: 60px 0 80px;
 }
 
+/* Hero */
+
 .contact-hero {
   text-align: center;
   margin-bottom: 55px;
 }
 
 .contact-hero > span {
-  color: #2563eb;
+  color: #d10000;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.4px;
+  letter-spacing: 1.5px;
 }
 
 .contact-hero h1 {
@@ -30,7 +33,7 @@
 }
 
 .contact-hero strong {
-  color: #2563eb;
+  color: #d10000;
 }
 
 .contact-hero p {
@@ -40,6 +43,8 @@
   font-size: 15px;
   line-height: 1.7;
 }
+
+/* Layout */
 
 .contact-layout {
   display: grid;
@@ -51,16 +56,19 @@
 .contact-info,
 .contact-form-wrapper {
   padding: 32px;
-  background: white;
+  background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 16px;
+  border-radius: 14px;
 }
+
+/* Section Headers */
 
 .contact-info-header h2,
 .contact-form-header h2 {
   margin: 0;
   color: #111827;
   font-size: 20px;
+  font-weight: 700;
 }
 
 .contact-info-header p,
@@ -70,6 +78,8 @@
   font-size: 13px;
   line-height: 1.6;
 }
+
+/* Contact Information */
 
 .contact-info-list {
   margin-top: 35px;
@@ -92,8 +102,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 9px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #fff1f1;
+  color: #d10000;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-info-item:hover .contact-icon {
+  background: #d10000;
+  color: #ffffff;
 }
 
 .contact-info-item span {
@@ -106,8 +122,11 @@
   margin: 5px 0 0;
   color: #1e293b;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
+
+/* Contact Form */
 
 .contact-form {
   margin-top: 28px;
@@ -126,6 +145,7 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
+  min-width: 0;
 }
 
 .contact-field label {
@@ -146,45 +166,81 @@
   color: #111827;
   font-family: inherit;
   font-size: 13px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.contact-field textarea {
-  resize: vertical;
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: #9ca3af;
 }
 
 .contact-field input:focus,
 .contact-field textarea:focus {
-  border-color: #2563eb;
+  border-color: #d10000;
+  box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.07);
 }
+
+.contact-field textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+/* Submit Button */
 
 .contact-submit {
   align-self: flex-start;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   border: none;
   border-radius: 8px;
   padding: 12px 18px;
-  background: #2563eb;
-  color: white;
+  background: #d10000;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .contact-submit:hover {
-  background: #1d4ed8;
+  background: #ff2e2e;
+  transform: translateY(-1px);
 }
+
+.contact-submit:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
 
 @media (max-width: 800px) {
   .contact-layout {
     grid-template-columns: 1fr;
   }
+
+  .contact-info-list {
+    gap: 22px;
+  }
 }
 
 @media (max-width: 550px) {
   .contact-container {
-    padding-top: 40px;
+    width: 90%;
+    padding: 40px 0 55px;
+  }
+
+  .contact-hero {
+    margin-bottom: 35px;
+  }
+
+  .contact-hero h1 {
+    letter-spacing: -1.5px;
+  }
+
+  .contact-hero p {
+    font-size: 14px;
   }
 
   .contact-form-row {
@@ -193,6 +249,36 @@
 
   .contact-info,
   .contact-form-wrapper {
-    padding: 24px;
+    padding: 22px;
+    border-radius: 12px;
   }
+
+  .contact-submit {
+    width: 100%;
+  }
+}
+
+.contact-status {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.contact-status.success {
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.contact-status.error {
+  color: #b91c1c;
+  background: #fff1f1;
+  border: 1px solid #fecaca;
+}
+
+.contact-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

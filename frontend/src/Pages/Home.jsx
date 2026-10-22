@@ -7,6 +7,7 @@ import HotSellingSection from "../components/home/HotSellingSection";
 import CategorySection from "../components/home/CategorySection"; 
 import BrandSection from "../components/home/BrandSection";
 import HeroBanner from "../components/banner/HeroBanner";
+import HeroBanner2 from "../components/banner/HeroBanner2";
 import QuickActions from "../components/commen/QuickActions";
 const Home = () => {
   return (
@@ -15,10 +16,12 @@ const Home = () => {
       <Navbar />
 
         <main>
-        <HeroBanner />
-        <QuickActions />
+          <QuickActions />
+        <HeroBanner2 />
+        
         <BrandSection />
         <CategorySection />
+        <HeroBanner />
         <HotSellingSection />
         <FAQSection />
         <Footer />

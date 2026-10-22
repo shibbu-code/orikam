@@ -78,12 +78,12 @@
 
 .primary-button {
   border: none;
-  background: #0f172a;
+  background: #d10000;
   color: white;
 }
 
 .secondary-button {
-  border: 1px solid #cbd5e1;
+  border: 1px solid #d10000;
   background: white;
   color: #334155;
 }

@@ -8,10 +8,10 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-
+import Footer from "../../components/home/Footer"
 import Navbar from "../../components/commen/Navbar";
 import ProductCard from "../../components/home/ProductCard";
-
+import HeroBanner4 from "../../components/banner/HeroBanner4";
 import { getProducts } from "../../services/productApi";
 import { getCategories } from "../../services/categoryApi";
 import { getBrands } from "../../services/brandApi";
@@ -172,7 +172,7 @@ const ProductListing = () => {
   ========================================= */
 
   const handleAddToCart = async (
-    productId
+    productId,moq 
   ) => {
     const userId =
       localStorage.getItem("userId");
@@ -184,7 +184,7 @@ const ProductListing = () => {
 
     try {
       const response = await fetch(
-        "https://orikam-2.onrender.com/api/cart/add",
+        `${import.meta.env.VITE_API_URL}/api/cart/add`,
         {
           method: "POST",
           headers: {
@@ -193,7 +193,7 @@ const ProductListing = () => {
           body: JSON.stringify({
             userId,
             productId,
-            quantity: 1,
+            quantity: moq || 1,
           }),
         }
       );
@@ -276,7 +276,7 @@ const ProductListing = () => {
   return (
     <div className="product-listing-page">
       <Navbar />
-
+      <HeroBanner4 />
       <main className="product-listing-container">
 
         {/* Header */}
@@ -509,6 +509,7 @@ const ProductListing = () => {
         )}
 
       </main>
+      <Footer/>
     </div>
   );
 };

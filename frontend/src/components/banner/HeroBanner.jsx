@@ -3,9 +3,13 @@ import "./HeroBanner.css";
 
 const HeroBanner = () => {
   return (
-    <section className="hero-banner">
+    <section className="hero-banner"
+     onClick={() => {
+      window.location.href = "/membership";
+    }  } 
+    >
       <img
-        src="/images/home-banner.gif"
+        src="/images/sale.png"
         alt="Special offer on dental products"
       />
     </section>
