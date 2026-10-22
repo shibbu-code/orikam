@@ -92,11 +92,8 @@
   align-items: center;
   gap: 10px;
   padding: 0 14px;
-<<<<<<< HEAD
   border: 1px solid #d1d5db;
-=======
   border: 1px solid #d10000;
->>>>>>> 011b1ce (ui changes)
   border-radius: 1px;
   background: #ffffff;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -147,11 +144,8 @@
   height: 48px;
   border: none;
   border-radius: 5px;
-<<<<<<< HEAD
   background: #111827;
-=======
   background: #d10000;
->>>>>>> 011b1ce (ui changes)
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
