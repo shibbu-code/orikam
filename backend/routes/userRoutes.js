@@ -19,7 +19,7 @@ router.get("/:userId/recently-viewed", getRecentlyViewed);
 
 router.get("/:userId/addresses", getUserAddresses);
 router.post("/:userId/addresses", addUserAddress);
-router.put(":userId/addresses/",updateUserAddress);
-router.delete("/:userId/addresses/",deleteUserAddress);
-router.patch("/:userId/addresses/default",setDefaultUserAddress);
+router.put("/:userId/addresses/:addressId",updateUserAddress);
+router.delete("/:userId/addresses/:addressId",deleteUserAddress);
+router.patch("/:userId/addresses/:addressId/default",setDefaultUserAddress);
 module.exports = router;
