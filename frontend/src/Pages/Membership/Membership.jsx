@@ -9,6 +9,21 @@ import Footer from "../../components/home/Footer"
 import Navbar from "../../components/commen/Navbar";
 const TIER_ORDER = ["Silver", "Gold", "Platinum", "Diamond"];
 
+const loadRazorpayScript = () =>
+  new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+
+
 const Membership = () => {
   const navigate = useNavigate();
 const userId = localStorage.getItem("userId");
@@ -263,83 +278,170 @@ return typeof plan === "object" ? plan._id : plan;
 const currentPlanId = getCurrentPlanId();
 
 // Purchase or upgrade membership
+
 const handlePurchase = async (plan) => {
-if (!userId) {
-setError("Please log in to purchase a membership.");
-return;
-}
+  if (!userId) {
+    setError("Please log in to purchase a membership.");
+    return;
+  }
 
+  if (purchasingPlan) return;
 
-if (purchasingPlan) return;
+  setError("");
+  setSuccess("");
 
-setError("");
-setSuccess("");
-
-const currentPlan = plans.find(
-  (item) => String(item._id) === String(currentPlanId)
-);
-
-if (
-  activeMembership &&
-  currentPlan &&
-  TIER_ORDER.indexOf(plan.name) <=
-    TIER_ORDER.indexOf(currentPlan.name)
-) {
-  setError(
-    "You can only upgrade to a higher membership tier."
+  const currentPlan = plans.find(
+    (item) => String(item._id) === String(currentPlanId)
   );
-  return;
-}
 
-const confirmed = window.confirm(
-  `Activate ${plan.name} membership for ₹${plan.monthlyPrice}?`
-);
+  if (
+    activeMembership &&
+    currentPlan &&
+    TIER_ORDER.indexOf(plan.name) <=
+      TIER_ORDER.indexOf(currentPlan.name)
+  ) {
+    setError("You can only upgrade to a higher membership tier.");
+    return;
+  }
 
-if (!confirmed) return;
+  try {
+    setPurchasingPlan(plan._id);
 
-try {
-  setPurchasingPlan(plan._id);
+    // Load Razorpay Checkout.
+    const scriptLoaded = await loadRazorpayScript();
 
-  const response = await api.post(
-    "/api/membership/purchase",
-    {
-      userId,
-      planId: plan._id,
+    if (!scriptLoaded) {
+      throw new Error("Unable to load Razorpay Checkout. Please try again.");
     }
-  );
 
-  if (response.data.success === false) {
-    throw new Error(
-      response.data.message ||
-        "Membership purchase failed."
+    // Ask the backend to create a payment order.
+    const response = await api.post(
+      "/api/membership/create-payment",
+      {
+        userId,
+        planId: plan._id,
+      }
     );
+
+    const paymentData = response.data;
+
+    if (
+      !paymentData.success ||
+      !paymentData.razorpayOrderId ||
+      !paymentData.key
+    ) {
+      throw new Error(
+        paymentData.message || "Unable to create payment order."
+      );
+    }
+
+    // Open Razorpay Checkout.
+    const options = {
+      key: paymentData.key,
+      amount: paymentData.amount,
+      currency: paymentData.currency,
+      name: "ORIKAM",
+      description: `${plan.name} Membership - 30 Days`,
+      order_id: paymentData.razorpayOrderId,
+
+      prefill: {
+        name: paymentData.customer?.name || "",
+        email: paymentData.customer?.email || "",
+        contact: paymentData.customer?.contact || "",
+      },
+
+      theme: {
+        color: "#d10000",
+      },
+
+      handler: async (razorpayResponse) => {
+        try {
+          setError("");
+
+          // Verify payment with your backend.
+          const verificationResponse = await api.post(
+            "/api/membership/verify-payment",
+            {
+              userId,
+              razorpay_order_id: razorpayResponse.razorpay_order_id,
+              razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+              razorpay_signature: razorpayResponse.razorpay_signature,
+            }
+          );
+
+          if (!verificationResponse.data.success) {
+            throw new Error(
+              verificationResponse.data.message ||
+                "Payment verification failed."
+            );
+          }
+
+          const referralReward =
+            verificationResponse.data.referralReward;
+
+          let successMessage =
+            `${plan.name} membership activated successfully!`;
+
+          if (referralReward?.rewarded) {
+            successMessage +=
+              ` You received ${referralReward.newUserCoins} referral coins!`;
+          }
+
+          setSuccess(successMessage);
+
+          // Refresh membership, wallet, coins, and transaction history.
+          await loadMembershipData();
+        } catch (verificationError) {
+          console.error(
+            "Membership payment verification error:",
+            verificationError
+          );
+
+          setError(
+            verificationError.response?.data?.message ||
+              verificationError.message ||
+              "Payment may have succeeded, but verification failed. Please refresh your membership details before trying again."
+          );
+        } finally {
+          setPurchasingPlan(null);
+        }
+      },
+
+      modal: {
+        ondismiss: () => {
+          setPurchasingPlan(null);
+        },
+      },
+    };
+
+    const checkout = new window.Razorpay(options);
+
+    checkout.on("payment.failed", (event) => {
+      console.error("Razorpay payment failed:", event.error);
+
+      setError(
+        event.error?.description ||
+          "Payment failed. Please try again."
+      );
+
+      setPurchasingPlan(null);
+    });
+
+    checkout.open();
+  } catch (err) {
+    console.error("Membership checkout error:", err);
+
+    setError(
+      err.response?.data?.message ||
+        err.message ||
+        "Unable to start membership payment."
+    );
+
+    setPurchasingPlan(null);
   }
-
-  const referralReward = response.data.referralReward;
-
-  let successMessage =
-    `${plan.name} membership activated successfully!`;
-
-  if (referralReward?.rewarded) {
-    successMessage +=
-      ` You received ${referralReward.newUserCoins} referral coins!`;
-  }
-
-  setSuccess(successMessage);
-
-  await loadMembershipData();
-} catch (err) {
-  setError(
-    err.response?.data?.message ||
-      err.message ||
-      "Unable to activate membership."
-  );
-} finally {
-  setPurchasingPlan(null);
-}
-
-
 };
+
+
 
 if (loading) {
 return ( <div className="membership-loading"> <div className="membership-spinner" /> <p>Loading membership plans...</p> </div>
@@ -641,7 +743,7 @@ ORIKAM REWARDS </span>
               onClick={() => handlePurchase(plan)}
             >
               {purchasingPlan === plan._id
-                ? "Activating..."
+                ? "Processing..."
                 : isCurrent
                 ? "Current Plan"
                 : isLowerOrEqualTier

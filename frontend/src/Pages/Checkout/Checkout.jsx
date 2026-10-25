@@ -13,7 +13,9 @@ import Footer from "../../components/home/Footer"
 import Navbar from "../../components/commen/Navbar";
 import api from "../../services/api";
 import { getCart } from "../../services/cartApi";
-import { createOrder } from "../../services/orderApi";
+import { createOrder ,
+  createProductOrderPayment,
+  verifyProductOrderPayment,} from "../../services/orderApi";
 
 import {
   getUserAddresses,
@@ -36,6 +38,21 @@ const EMPTY_ADDRESS = {
   addressType: "Home",
   isDefault: false,
 };
+
+const loadRazorpay = () =>
+  new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+
+    document.body.appendChild(script);
+  });
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -348,29 +365,51 @@ const Checkout = () => {
   // REWARD PREVIEW
   // --------------------------------------------------
 
-  const fetchRewardPreview = useCallback(async () => {
-    if (!userId || !cart?.items?.length) return;
+const fetchRewardPreview = useCallback(async () => {
+  if (!userId || !cart?.items?.length) return;
 
-    try {
-      setRewardLoading(true);
-      setRewardError("");
+  try {
+    setRewardLoading(true);
+    setRewardError("");
 
-      const response = await api.post("/api/orders/reward-preview", {
-        userId,
-      });
+    const response = await api.post("/api/orders/reward-preview", {
+      userId,
+    });
 
-      setRewardPreview(response.data.preview || response.data);
-    } catch (error) {
-      console.error("Reward preview failed:", error);
-      setRewardPreview(error.response?.data?.preview || null);
-      setRewardError(
-        error.response?.data?.message ||
-          "Unable to calculate rewards."
-      );
-    } finally {
-      setRewardLoading(false);
-    }
-  }, [userId, cart]);
+    const data = response.data?.preview || response.data;
+
+   
+
+    const normalizedPreview = {
+      ...data,
+      membership:
+        data.membership ||
+        data.membershipTier ||
+        "Silver",
+      availableCoins: Number(data.availableCoins ?? 0),
+      coinsToRedeem: Number(data.coinsToRedeem ?? 0),
+      coinDiscount: Number(data.coinDiscount ?? 0),
+      estimatedCoinsEarned: Number(
+        data.estimatedCoinsEarned ?? 0
+      ),
+      coinMultiplier: Number(data.coinMultiplier ?? 1),
+    };
+
+    setRewardPreview(normalizedPreview);
+  } catch (error) {
+    console.error("Reward preview failed:", error);
+
+    setRewardPreview(null);
+
+    setRewardError(
+      error.response?.data?.message ||
+        "Unable to calculate rewards."
+    );
+  } finally {
+    setRewardLoading(false);
+  }
+}, [userId, cart]);
+
 
   useEffect(() => {
     if (!cart?.items?.length) return;
@@ -386,69 +425,233 @@ const Checkout = () => {
   // PLACE ORDER
   // --------------------------------------------------
 
-  const handlePlaceOrder = async (e) => {
-    e.preventDefault();
+ 
+const handlePlaceOrder = async (e) => {
+  e.preventDefault();
 
-    if (!cart?.items?.length) {
-      alert("Your cart is empty.");
-      navigate("/products");
-      return;
-    }
+  if (!cart?.items?.length) {
+    alert("Your cart is empty.");
+    navigate("/products");
+    return;
+  }
 
-    if (showAddressForm) {
-      alert("Please save the address or cancel the address form.");
-      return;
-    }
+  if (showAddressForm) {
+    alert("Please save the address or cancel the address form.");
+    return;
+  }
 
-    const selectedAddress = savedAddresses.find(
-      (item) => item._id === selectedAddressId
-    );
+  const selectedAddress = savedAddresses.find(
+    (item) => item._id === selectedAddressId
+  );
 
-    if (!selectedAddress) {
-      alert("Please select a delivery address.");
-      return;
-    }
+  if (!selectedAddress) {
+    alert("Please select a delivery address.");
+    return;
+  }
 
-    if (!rewardPreview) {
-      alert("Please wait for the reward discount to load.");
-      return;
-    }
+  if (!rewardPreview) {
+    alert("Please wait for the reward discount to load.");
+    return;
+  }
 
-    try {
-      setPlacingOrder(true);
+  let razorpayOpened = false;
 
-      const shippingAddress = {
-        name: selectedAddress.fullName,
-        phone: selectedAddress.phone,
-        addressLine: selectedAddress.addressLine,
-        city: selectedAddress.city,
-        state: selectedAddress.state,
-        pincode: selectedAddress.pincode,
-      };
+  try {
+    setPlacingOrder(true);
 
-      const orderData = {
+    const shippingAddress = {
+      name: selectedAddress.fullName,
+      phone: selectedAddress.phone,
+      addressLine: selectedAddress.addressLine,
+      city: selectedAddress.city,
+      state: selectedAddress.state,
+      pincode: selectedAddress.pincode,
+    };
+
+    // COD: use your existing order creation API.
+    if (paymentMethod === "COD") {
+      const response = await createOrder({
         userId,
         shippingAddress,
-        paymentMethod,
-      };
+        paymentMethod: "COD",
+      });
 
-      const response = await createOrder(orderData);
       const order = response.data.order;
+
+      if (!order) {
+        throw new Error("Order was not created successfully.");
+      }
 
       navigate("/order-success", {
         state: { order },
       });
-    } catch (error) {
-      console.error("Failed to place order:", error);
+
+      return;
+    }
+
+    // ONLINE: load Razorpay Checkout script.
+    if (!window.Razorpay) {
+      const existingScript = document.querySelector(
+        'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+      );
+
+      if (existingScript) {
+        await new Promise((resolve, reject) => {
+          if (window.Razorpay) return resolve();
+
+          existingScript.addEventListener("load", resolve, { once: true });
+          existingScript.addEventListener(
+            "error",
+            () => reject(new Error("Razorpay script failed to load.")),
+            { once: true }
+          );
+        });
+      } else {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+
+          script.src =
+            "https://checkout.razorpay.com/v1/checkout.js";
+
+          script.onload = resolve;
+          script.onerror = () =>
+            reject(new Error("Unable to load Razorpay Checkout."));
+
+          document.body.appendChild(script);
+        });
+      }
+    }
+
+    if (!window.Razorpay) {
+      throw new Error(
+        "Razorpay did not load. Please refresh and try again."
+      );
+    }
+
+    console.log("Creating Razorpay order...");
+
+    // Create the payment order on your backend.
+    const paymentResponse = await createProductOrderPayment({
+      userId,
+      shippingAddress,
+      coinsToRedeem: Number(rewardPreview.coinsToRedeem || 0),
+    });
+
+    const paymentData = paymentResponse.data;
+
+    console.log("Razorpay order response:", paymentData);
+
+    if (
+      !paymentData?.key ||
+      !paymentData?.razorpayOrderId ||
+      !Number(paymentData?.amount)
+    ) {
+      throw new Error(
+        "Invalid Razorpay order details received from the backend."
+      );
+    }
+
+    const options = {
+      key: paymentData.key,
+      amount: paymentData.amount,
+      currency: paymentData.currency || "INR",
+      name: "ORIKAM",
+      description: "B2B Product Order",
+      order_id: paymentData.razorpayOrderId,
+
+      prefill: {
+        name: selectedAddress.fullName || "",
+        contact: selectedAddress.phone || "",
+      },
+
+      theme: {
+        color: "#d10000",
+      },
+
+      handler: async (razorpayResponse) => {
+        try {
+          console.log(
+            "Razorpay payment response:",
+            razorpayResponse
+          );
+
+          const verificationResponse =
+            await verifyProductOrderPayment({
+              userId,
+              razorpay_payment_id:
+                razorpayResponse.razorpay_payment_id,
+              razorpay_order_id:
+                razorpayResponse.razorpay_order_id,
+              razorpay_signature:
+                razorpayResponse.razorpay_signature,
+            });
+
+          const result = verificationResponse.data;
+
+          if (!result?.success || !result?.order) {
+            throw new Error(
+              result?.message ||
+                "Payment verification did not complete successfully."
+            );
+          }
+
+          navigate("/order-success", {
+            state: { order: result.order },
+          });
+        } catch (error) {
+          console.error("Payment verification failed:", error);
+
+          alert(
+            error.response?.data?.message ||
+              error.message ||
+              "Payment verification is pending. Check My Orders before trying again."
+          );
+        } finally {
+          setPlacingOrder(false);
+        }
+      },
+
+      modal: {
+        ondismiss: () => {
+          setPlacingOrder(false);
+        },
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+
+    razorpay.on("payment.failed", (response) => {
+      console.error(
+        "Razorpay payment failed:",
+        response.error
+      );
 
       alert(
-        error.response?.data?.message ||
-          "Failed to place order. Please try again."
+        response.error?.description ||
+          "Payment failed. Please try again."
       );
-    } finally {
+    });
+
+    razorpay.open();
+    razorpayOpened = true;
+
+    console.log("Razorpay Checkout opened.");
+  } catch (error) {
+    console.error("Failed to place order:", error);
+
+    alert(
+      error.response?.data?.message ||
+        error.message ||
+        "Failed to process your order. Please try again."
+    );
+  } finally {
+    if (!razorpayOpened) {
       setPlacingOrder(false);
     }
-  };
+  }
+};
+
+
 
   // --------------------------------------------------
   // LOADING STATE

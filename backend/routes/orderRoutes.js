@@ -2,6 +2,8 @@ const express = require("express");
 
 const {
   createOrder,
+  createProductOrderPayment,
+  verifyProductOrderPayment,
   getOrdersByUser,
   getOrderById,
   getAllOrders,
@@ -27,6 +29,9 @@ router.post("/:orderId/return", requestReturn);
 router.patch("/:orderId/status", updateOrderStatus);
 
 router.patch("/:orderId/return/status", updateReturnStatus);
+
+router.post("/payment/create", createProductOrderPayment);
+router.post("/payment/verify", verifyProductOrderPayment);
 
 router.get("/:orderId", getOrderById);
 

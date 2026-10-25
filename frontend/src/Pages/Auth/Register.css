@@ -200,3 +200,37 @@
     font-size: 26px;
   }
 }
+
+
+.referral-input-wrapper {
+  position: relative;
+}
+
+.referral-input-wrapper input {
+  width: 100%;
+  padding-left: 42px;
+  text-transform: uppercase;
+}
+
+.referral-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #d10000;
+  pointer-events: none;
+}
+
+.optional-label {
+  color: #777;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.input-hint {
+  display: block;
+  margin-top: 5px;
+  color: #777;
+  font-size: 12px;
+}
+

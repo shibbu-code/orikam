@@ -137,6 +137,31 @@ const handleSubmit = async (e) => {
             </div>
           </div>
 
+<div className="input-group">
+  <label htmlFor="referralCode">
+    Referral Code <span className="optional-label">(Optional)</span>
+  </label>
+
+  <div className="input-wrapper referral-input-wrapper">
+    <Gift size={18} className="referral-icon" />
+
+    <input
+      type="text"
+      id="referralCode"
+      name="referralCode"
+      placeholder="Enter referral code"
+      value={formData.referralCode}
+      onChange={handleChange}
+      autoComplete="off"
+    />
+  </div>
+
+  <small className="input-hint">
+    Have a referral code? Enter it to join ORIKAM.
+  </small>
+</div>
+
+
           <div className="input-group">
             <label>Password</label>
 
