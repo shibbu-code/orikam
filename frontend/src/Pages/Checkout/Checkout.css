@@ -359,7 +359,7 @@
 }
 
 .saved-address-card.selected {
-  border-color: #2563eb;
+  border-color: #a30000;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
   background: #f8fbff;
 }
@@ -373,7 +373,7 @@
 
 .saved-address-select input[type="radio"] {
   margin-top: 5px;
-  accent-color: #2563eb;
+  accent-color: #a30000;
 }
 
 .address-type-icon {
@@ -383,7 +383,7 @@
   flex-shrink: 0;
   width: 38px;
   height: 38px;
-  color: #2563eb;
+  color: #a30000;
   background: #eff6ff;
   border-radius: 10px;
 }
@@ -439,7 +439,7 @@
   align-items: center;
   gap: 5px;
   margin-top: 8px;
-  color: #2563eb;
+  color: #a30000;
   font-size: 12px;
   font-weight: 600;
 }
@@ -463,7 +463,7 @@
 }
 
 .text-action {
-  color: #2563eb;
+  color: #a30000;
   font-size: 12px;
   font-weight: 600;
 }
@@ -480,7 +480,7 @@
 
 .icon-action:hover {
   background: #eff6ff;
-  color: #2563eb;
+  color: #a30000;
 }
 
 .icon-action.delete-action:hover {
@@ -499,7 +499,7 @@
   border: 1px dashed #93c5fd;
   border-radius: 10px;
   background: #f8fbff;
-  color: #2563eb;
+  color: #d10000;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -594,13 +594,13 @@
 }
 
 .address-type-option.active {
-  border-color: #2563eb;
+  border-color: #a30000;
   background: #eff6ff;
   color: #1d4ed8;
 }
 
 .address-type-option input {
-  accent-color: #2563eb;
+  accent-color: #a30000;
 }
 
 .default-address-checkbox {
@@ -614,7 +614,7 @@
 }
 
 .default-address-checkbox input {
-  accent-color: #2563eb;
+  accent-color: #a30000;
 }
 
 .address-form-actions {
@@ -641,13 +641,13 @@
 }
 
 .save-address-button {
-  border: 1px solid #2563eb;
-  background: #2563eb;
+  border: 1px solid #a30000;
+  background: #a30000;
   color: #fff;
 }
 
 .save-address-button:hover {
-  background: #1d4ed8;
+  background: #d10000;
 }
 
 .save-address-button:disabled,
@@ -752,7 +752,7 @@
   height: 36px;
   border-radius: 50%;
   background: #eff6ff;
-  color: #2563eb;
+  color: #a30000;
   font-size: 15px;
   font-weight: 700;
 }
@@ -796,7 +796,7 @@
 }
 
 .no-saved-addresses > svg {
-  color: #2563eb;
+  color: #a30000;
   margin-bottom: 14px;
 }
 
@@ -874,7 +874,7 @@
 }
 
 .saved-address-card.selected {
-  border: 1.5px solid #2563eb;
+  border: 1.5px solid #a30000;
   background: #f8fbff;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.06);
 }
@@ -895,7 +895,7 @@
   height: 17px;
   flex-shrink: 0;
   margin: 4px 0 0;
-  accent-color: #2563eb;
+  accent-color: #a30000;
   cursor: pointer;
 }
 
@@ -908,7 +908,7 @@
   flex-shrink: 0;
   border-radius: 10px;
   background: #eff6ff;
-  color: #2563eb;
+  color: #a30000;
 }
 
 .saved-address-content {
@@ -972,7 +972,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #2563eb;
+  color: #a30000;
   font-size: 12px;
   font-weight: 600;
   margin-top: 3px;
@@ -993,7 +993,7 @@
 .text-action {
   border: none;
   background: transparent;
-  color: #2563eb;
+  color: #a30000;
   font-size: 12px;
   font-weight: 600;
   padding: 7px 4px;
@@ -1001,7 +1001,7 @@
 }
 
 .text-action:hover {
-  color: #1d4ed8;
+  color: #a30000;
   text-decoration: underline;
 }
 
@@ -1022,7 +1022,7 @@
 .icon-action:hover {
   border-color: #93c5fd;
   background: #eff6ff;
-  color: #2563eb;
+  color: #d10000;
 }
 
 .icon-action.delete-action:hover {
@@ -1045,7 +1045,7 @@
   border: 1px dashed #93c5fd;
   border-radius: 9px;
   background: #f8fbff;
-  color: #2563eb;
+  color: #a30000;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -1053,7 +1053,7 @@
 }
 
 .add-address-button:hover {
-  border-color: #2563eb;
+  border-color: #d10000;
   background: #eff6ff;
 }
 
@@ -1136,20 +1136,20 @@
 }
 
 .address-type-option:hover {
-  border-color: #93c5fd;
+  border-color: #fd9893;
 }
 
 .address-type-option.active {
-  border-color: #2563eb;
+  border-color: #a30000;
   background: #eff6ff;
-  color: #1d4ed8;
+  color: #a30000;
 }
 
 .address-type-option input {
   width: 15px;
   height: 15px;
   margin: 0;
-  accent-color: #2563eb;
+  accent-color: #a30000;
 }
 
 /* ================================
@@ -1215,7 +1215,7 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #2563eb;
+  border-color: #a30000;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
@@ -1242,7 +1242,7 @@
   width: 16px;
   height: 16px;
   margin: 0;
-  accent-color: #2563eb;
+  accent-color: #a30000;
   cursor: pointer;
 }
 
@@ -1284,14 +1284,14 @@
 }
 
 .save-address-button {
-  border: 1px solid #2563eb;
-  background: #2563eb;
+  border: 1px solid #a30000;
+  background: #a30000;
   color: #ffffff;
 }
 
 .save-address-button:hover:not(:disabled) {
-  border-color: #1d4ed8;
-  background: #1d4ed8;
+  border-color: #a30000;
+  background: #a30000;
   box-shadow: 0 4px 10px rgba(37, 99, 235, 0.18);
 }
 
@@ -1328,7 +1328,7 @@
 }
 
 .payment-option.selected {
-  border-color: #2563eb;
+  border-color: #a30000;
   background: #f8fbff;
 }
 
@@ -1337,7 +1337,7 @@
   height: 17px;
   flex-shrink: 0;
   margin: 3px 0 0;
-  accent-color: #2563eb;
+  accent-color: #a30000;
   cursor: pointer;
 }
 
